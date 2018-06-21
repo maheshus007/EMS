@@ -45,7 +45,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
-
+/**
+ * @author Ram Alapure
+ * @since 05-04-2017
+ */
 
 @Controller
 public class UserController implements Initializable{
@@ -88,9 +91,6 @@ public class UserController implements Initializable{
 	
 	@FXML
     private Button saveUser;
-	
-	@FXML
-    private Button searchUser;
 	
 	@FXML
 	private TableView<User> userTable;
@@ -151,51 +151,47 @@ public class UserController implements Initializable{
     }
     
     @FXML
-    private void searchUser(ActionEvent event){
-    }
-    
-    @FXML
     private void saveUser(ActionEvent event){
     	
-//    	if(validate("First Name", getFirstName(), "[a-zA-Z]+") &&
-//    	   validate("Last Name", getLastName(), "[a-zA-Z]+") &&
-//    	   emptyValidation("DOB", dob.getEditor().getText().isEmpty()) && 
-//    	   emptyValidation("Role", getRole() == null) ){
-//    		
-//    		if(userId.getText() == null || userId.getText() == ""){
-//    			if(validate("Email", getEmail(), "[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+") &&
-//    				emptyValidation("Password", getPassword().isEmpty())){
-//    				
-//    				User user = new User();
-//        			user.setFirstName(getFirstName());
-//        			user.setLastName(getLastName());
-////        			user.setDob(getDob());
-//        			user.setGender(getGender());
-//        			user.setRole(getRole());
-//        			user.setEmail(getEmail());
-//        			user.setPassword(getPassword());
-//        			
-//        			User newUser = userService.save(user);
-//        			
-//        			saveAlert(newUser);
-//    			}
-//    			
-//    		}else{
-//    			User user = userService.find(Long.parseLong(userId.getText()));
-//    			user.setFirstName(getFirstName());
-//    			user.setLastName(getLastName());
-////    			user.setDob(getDob());
-//    			user.setGender(getGender());
-//    			user.setRole(getRole());
-//    			User updatedUser =  userService.update(user);
-//    			updateAlert(updatedUser);
-//    		}
-//    		
-//    		clearFields();
-//    		loadUserDetails();
-//    	}
-//    	
-//    	
+    	if(validate("First Name", getFirstName(), "[a-zA-Z]+") &&
+    	   validate("Last Name", getLastName(), "[a-zA-Z]+") &&
+    	   emptyValidation("DOB", dob.getEditor().getText().isEmpty()) && 
+    	   emptyValidation("Role", getRole() == null) ){
+    		
+    		if(userId.getText() == null || userId.getText() == ""){
+    			if(validate("Email", getEmail(), "[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+") &&
+    				emptyValidation("Password", getPassword().isEmpty())){
+    				
+    				User user = new User();
+        			user.setFirstName(getFirstName());
+        			user.setLastName(getLastName());
+//        			user.setDob(getDob());
+        			user.setGender(getGender());
+        			user.setRole(getRole());
+        			user.setEmail(getEmail());
+        			user.setPassword(getPassword());
+        			
+        			User newUser = userService.save(user);
+        			
+        			saveAlert(newUser);
+    			}
+    			
+    		}else{
+    			User user = userService.find(Long.parseLong(userId.getText()));
+    			user.setFirstName(getFirstName());
+    			user.setLastName(getLastName());
+//    			user.setDob(getDob());
+    			user.setGender(getGender());
+    			user.setRole(getRole());
+    			User updatedUser =  userService.update(user);
+    			updateAlert(updatedUser);
+    		}
+    		
+    		clearFields();
+    		loadUserDetails();
+    	}
+    	
+    	
     }
     
     @FXML

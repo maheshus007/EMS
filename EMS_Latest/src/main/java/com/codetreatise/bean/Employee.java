@@ -15,16 +15,18 @@ public class Employee {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "staff_id", updatable = false, nullable = false)
-	private long staffId;
+	@Column(name = "id", updatable = false, nullable = false)
+	private long id;
+	
+	private String staffId;
 	
 	private String staffName;
 	
-	private String uaeid;
+	private String uaeId;
 	
 	private String batch;
 	
-	private int contact;
+	private String contact;
 	
 	private String placeofbirth;
 	
@@ -42,23 +44,23 @@ public class Employee {
 	
 	private String passport;
 	
-	private String drivinglicense;
+	private String drivingLicense;
 	
-	private String dob;
+	private LocalDate dob;
 	
-	private String doj;
+	private LocalDate doj;
 	
-	private String ojtstartdate;
+	private LocalDate ojtstartdate;
 	
-	private String ojtenddate;
+	private LocalDate ojtenddate;
 	
 	private String areaofwork;
 	
 	private String NSstatus;
 	
-	private String NSstartdate;
+	private LocalDate NSstartdate;
 	
-	private String NS_end_date;
+	private LocalDate NS_end_date;
 	
 	private String _300hrs;
 	
@@ -74,11 +76,71 @@ public class Employee {
 	
 	private String specifymodules;
 
-	public long getStaffid() {
+	private String basicLicense;
+	
+	private String l3CourseType;
+	
+	private String a380Project;
+	
+	private String rfidProjectMember;
+	
+	private String engineChangeProject;
+	
+	private String corCertificate;
+	
+	public String getBasicLicense() {
+		return basicLicense;
+	}
+
+	public void setBasicLicense(String basicLicense) {
+		this.basicLicense = basicLicense;
+	}
+
+	public String getL3CourseType() {
+		return l3CourseType;
+	}
+
+	public void setL3CourseType(String l3CourseType) {
+		this.l3CourseType = l3CourseType;
+	}
+
+	public String getA380Project() {
+		return a380Project;
+	}
+
+	public void setA380Project(String a380Project) {
+		this.a380Project = a380Project;
+	}
+
+	public String getRfidProjectMember() {
+		return rfidProjectMember;
+	}
+
+	public void setRfidProjectMember(String rfidProjectMember) {
+		this.rfidProjectMember = rfidProjectMember;
+	}
+
+	public String getEngineChangeProject() {
+		return engineChangeProject;
+	}
+
+	public void setEngineChangeProject(String engineChangeProject) {
+		this.engineChangeProject = engineChangeProject;
+	}
+
+	public String getCorCertificate() {
+		return corCertificate;
+	}
+
+	public void setCorCertificate(String corCertificate) {
+		this.corCertificate = corCertificate;
+	}
+
+	public String getStaffid() {
 		return staffId;
 	}
 
-	public void setStaffid(long string) {
+	public void setStaffid(String string) {
 		this.staffId = string;
 	}
 
@@ -91,11 +153,11 @@ public class Employee {
 	}
 
 	public String getUaeid() {
-		return uaeid;
+		return uaeId;
 	}
 
 	public void setUaeid(String uaeid) {
-		this.uaeid = uaeid;
+		this.uaeId = uaeid;
 	}
 
 	public String getBatch() {
@@ -106,11 +168,11 @@ public class Employee {
 		this.batch = batch;
 	}
 
-	public int getContact() {
+	public String getContact() {
 		return contact;
 	}
 
-	public void setContact(int contact) {
+	public void setContact(String contact) {
 		this.contact = contact;
 	}
 
@@ -179,42 +241,42 @@ public class Employee {
 	}
 
 	public String getDrivinglicense() {
-		return drivinglicense;
+		return drivingLicense;
 	}
 
-	public void setDrivinglicense(String drivinglicense) {
-		this.drivinglicense = drivinglicense;
+	public void setDrivinglicense(String drivingLicense) {
+		this.drivingLicense = drivingLicense;
 	}
 
-	public String getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(String dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 
-	public String getDoj() {
+	public LocalDate getDoj() {
 		return doj;
 	}
 
-	public void setDoj(String doj) {
+	public void setDoj(LocalDate doj) {
 		this.doj = doj;
 	}
 
-	public String getOjtstartdate() {
+	public LocalDate getOjtstartdate() {
 		return ojtstartdate;
 	}
 
-	public void setOjtstartdate(String ojtstartdate) {
+	public void setOjtstartdate(LocalDate ojtstartdate) {
 		this.ojtstartdate = ojtstartdate;
 	}
 
-	public String getOjtenddate() {
+	public LocalDate getOjtenddate() {
 		return ojtenddate;
 	}
 
-	public void setOjtenddate(String ojtenddate) {
+	public void setOjtenddate(LocalDate ojtenddate) {
 		this.ojtenddate = ojtenddate;
 	}
 
@@ -234,19 +296,19 @@ public class Employee {
 		NSstatus = nSstatus;
 	}
 
-	public String getNSstartdate() {
+	public LocalDate getNSstartdate() {
 		return NSstartdate;
 	}
 
-	public void setNSstartdate(String nSstartdate) {
+	public void setNSstartdate(LocalDate nSstartdate) {
 		NSstartdate = nSstartdate;
 	}
 
-	public String getNS_end_date() {
+	public LocalDate getNS_end_date() {
 		return NS_end_date;
 	}
 
-	public void setNS_end_date(String nS_end_date) {
+	public void setNSenddate(LocalDate nS_end_date) {
 		NS_end_date = nS_end_date;
 	}
 
@@ -308,14 +370,17 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [staffid=" + staffId + ", staffName=" + staffName + ", uaeid=" + uaeid + ", batch=" + batch
-				+ ", contact=" + contact + ", placeofbirth=" + placeofbirth + ", email=" + email + ", designation="
-				+ designation + ", staffgrade=" + staffgrade + ", nationality=" + nationality + ", department="
-				+ department + ", academicqualification=" + academicqualification + ", passport=" + passport
-				+ ", drivinglicense=" + drivinglicense + ", dob=" + dob + ", doj=" + doj + ", ojtstartdate="
+		return "Employee [id=" + id + ", staffId=" + staffId + ", staffName=" + staffName + ", uaeId=" + uaeId
+				+ ", batch=" + batch + ", contact=" + contact + ", placeofbirth=" + placeofbirth + ", email=" + email
+				+ ", designation=" + designation + ", staffgrade=" + staffgrade + ", nationality=" + nationality
+				+ ", department=" + department + ", academicqualification=" + academicqualification + ", passport="
+				+ passport + ", drivingLicense=" + drivingLicense + ", dob=" + dob + ", doj=" + doj + ", ojtstartdate="
 				+ ojtstartdate + ", ojtenddate=" + ojtenddate + ", areaofwork=" + areaofwork + ", NSstatus=" + NSstatus
 				+ ", NSstartdate=" + NSstartdate + ", NS_end_date=" + NS_end_date + ", _300hrs=" + _300hrs
 				+ ", logbook=" + logbook + ", major=" + major + ", linemanager=" + linemanager + ", workinghrs="
-				+ workinghrs + ", collegemodules=" + collegemodules + ", specifymodules=" + specifymodules + "]";
+				+ workinghrs + ", collegemodules=" + collegemodules + ", specifymodules=" + specifymodules
+				+ ", basicLicense=" + basicLicense + ", l3CourseType=" + l3CourseType + ", a380Project=" + a380Project
+				+ ", rfidProjectMember=" + rfidProjectMember + ", engineChangeProject=" + engineChangeProject
+				+ ", corCertificate=" + corCertificate + "]";
 	}
 }

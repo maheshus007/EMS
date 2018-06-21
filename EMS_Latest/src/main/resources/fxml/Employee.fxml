@@ -19,8 +19,6 @@
 <?import javafx.scene.effect.GaussianBlur?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.MotionBlur?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -112,6 +110,15 @@
                      </children>
                   </HBox>
                </children>
+            </HBox>
+            <HBox layoutX="40.0" layoutY="293.0" prefHeight="29.0" prefWidth="246.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="passport" prefHeight="26.0" prefWidth="133.0" promptText="Passport" />
+                  <TextField fx:id="drivingLicense" prefHeight="30.0" prefWidth="188.0" promptText="Driving License" />
+               </children>
+               <VBox.margin>
+                  <Insets left="25.0" right="25.0" />
+               </VBox.margin>
             </HBox>
             <HBox layoutX="40.0" layoutY="175.0" prefHeight="28.0" prefWidth="246.0" spacing="5.0">
                <children>
@@ -255,15 +262,16 @@
             </HBox>
             <VBox prefHeight="650.0" prefWidth="694.0">
                <children>
-                  <TableView fx:id="userTable" prefHeight="650.0" prefWidth="679.0" tableMenuButtonVisible="true">
+                  <TableView fx:id="employeeTable" prefHeight="650.0" prefWidth="679.0" tableMenuButtonVisible="true">
                     <columns>
-                      <TableColumn fx:id="colUserId" maxWidth="700.0" prefWidth="51.0" text="ID" />
-                      <TableColumn fx:id="staffNameCol" maxWidth="4000.0" prefWidth="94.0" text="Staff Name" />
-                        <TableColumn fx:id="uaeIdCol" maxWidth="4000.0" prefWidth="67.0" text="UAE ID" />
-                        <TableColumn fx:id="colDOB" maxWidth="4000.0" prefWidth="82.0" text="Date of Birth" />
-                        <TableColumn fx:id="batchCol" maxWidth="4000.0" prefWidth="64.0" text="Batch" />
-                        <TableColumn fx:id="colRole" maxWidth="4000.0" prefWidth="65.0" text="Grade" />
+                      <TableColumn fx:id="colstaffID" maxWidth="700.0" prefWidth="51.0" text="ID" />
+                      <TableColumn fx:id="staffNameCol" maxWidth="4000.0" text="Staff Name" />
+                        <TableColumn fx:id="uaeIdCol" maxWidth="4000.0" prefWidth="54.0" text="UAE ID" />
+                        <TableColumn fx:id="colDOB" maxWidth="4000.0" prefWidth="79.0" text="Date of Birth" />
+                        <TableColumn fx:id="batchCol" maxWidth="4000.0" prefWidth="56.0" text="Batch" />
+                        <TableColumn fx:id="grade" maxWidth="4000.0" prefWidth="65.0" text="Grade" />
                         <TableColumn fx:id="colEmail" maxWidth="6000.0" prefWidth="105.0" text="Email" />
+                        <TableColumn fx:id="colDOJ" maxWidth="6000.0" prefWidth="105.0" text="Join Date" />
                         <TableColumn fx:id="nationalityCol" maxWidth="4000.0" prefWidth="75.0" text="Nationality" />
                         <TableColumn fx:id="colEdit" maxWidth="3500.0" prefWidth="75.0" text="Edit" />
                     </columns>
@@ -293,7 +301,7 @@
                      <children>
                         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="694.0" spacing="5.0">
                            <children>
-                              <ComboBox fx:id="areaOfWork" prefHeight="25.0" prefWidth="114.0" promptText="Area of Work">
+                              <ComboBox fx:id="areaOfWork" prefHeight="25.0" prefWidth="119.0" promptText="Area of Work">
                                  <HBox.margin>
                                     <Insets top="5.0" />
                                  </HBox.margin>
@@ -303,7 +311,7 @@
                                           <GaussianBlur />
                                        </bumpInput>
                                        <light>
-                                          <Light.Distant color="#fffc56" />
+                                          <Light.Distant color="#e1ff00" />
                                        </light>
                                     </Lighting>
                                  </effect>
@@ -311,32 +319,32 @@
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor>
                               </ComboBox>
-                              <ComboBox fx:id="nsStatus" prefHeight="25.0" prefWidth="95.0" promptText="NS Status">
+                              <ComboBox fx:id="nsStatus" prefHeight="25.0" prefWidth="110.0" promptText="NS Status">
                                  <HBox.margin>
                                     <Insets top="5.0" />
                                  </HBox.margin>
                                  <effect>
                                     <Lighting>
                                        <bumpInput>
-                                          <Shadow />
+                                          <GaussianBlur />
                                        </bumpInput>
                                        <light>
-                                          <Light.Distant color="#fffc56" />
+                                          <Light.Distant color="#e1ff00" />
                                        </light>
                                     </Lighting>
                                  </effect>
                               </ComboBox>
-                              <ComboBox fx:id="threeHundredHrs" prefHeight="25.0" prefWidth="80.0" promptText="300Hrs">
+                              <ComboBox fx:id="threeHundredHrs" prefHeight="25.0" prefWidth="97.0" promptText="300Hrs">
                                  <HBox.margin>
                                     <Insets top="5.0" />
                                  </HBox.margin>
                                  <effect>
                                     <Lighting>
                                        <bumpInput>
-                                          <Shadow />
+                                          <GaussianBlur />
                                        </bumpInput>
                                        <light>
-                                          <Light.Distant color="#fffc56" />
+                                          <Light.Distant color="#e1ff00" />
                                        </light>
                                     </Lighting>
                                  </effect>
@@ -348,10 +356,10 @@
                                  <effect>
                                     <Lighting>
                                        <bumpInput>
-                                          <Shadow />
+                                          <GaussianBlur />
                                        </bumpInput>
                                        <light>
-                                          <Light.Distant color="#fffc56" />
+                                          <Light.Distant color="#e1ff00" />
                                        </light>
                                     </Lighting>
                                  </effect>
@@ -363,22 +371,22 @@
                                  <effect>
                                     <Lighting>
                                        <bumpInput>
-                                          <Shadow />
+                                          <GaussianBlur />
                                        </bumpInput>
                                        <light>
-                                          <Light.Distant color="#fffc56" />
+                                          <Light.Distant color="#e1ff00" />
                                        </light>
                                     </Lighting>
                                  </effect>
                               </ComboBox>
-                              <ComboBox fx:id="lineManager" prefHeight="25.0" prefWidth="120.0" promptText="Line Manager">
+                              <ComboBox fx:id="lineManager" prefHeight="25.0" prefWidth="150.0" promptText="Line Manager">
                                  <effect>
                                     <Lighting>
                                        <bumpInput>
-                                          <Shadow />
+                                          <GaussianBlur />
                                        </bumpInput>
                                        <light>
-                                          <Light.Distant color="#fffc56" />
+                                          <Light.Distant color="#e1ff00" />
                                        </light>
                                     </Lighting>
                                  </effect>
@@ -408,10 +416,10 @@
                                  <effect>
                                     <Lighting>
                                        <bumpInput>
-                                          <Shadow />
+                                          <GaussianBlur />
                                        </bumpInput>
                                        <light>
-                                          <Light.Distant color="#fffc56" />
+                                          <Light.Distant color="#e1ff00" />
                                        </light>
                                     </Lighting>
                                  </effect>
@@ -426,14 +434,10 @@
                                  <effect>
                                     <Lighting>
                                        <bumpInput>
-                                          <Shadow>
-                                             <input>
-                                                <MotionBlur />
-                                             </input>
-                                          </Shadow>
+                                          <GaussianBlur />
                                        </bumpInput>
                                        <light>
-                                          <Light.Distant color="#fffc56" />
+                                          <Light.Distant color="#e1ff00" />
                                        </light>
                                     </Lighting>
                                  </effect>

@@ -1,0 +1,61 @@
+create table user(id varchar(10),dob varchar(10),email varchar(20),first_name varchar(20),gender varchar(20),last_name varchar(20),password varchar(20),role varchar(20));
+/
+CREATE TABLE `user` (
+  `id` int(3) DEFAULT NULL,
+  `dob` varchar(10) DEFAULT NULL,
+  `email` varchar(20) DEFAULT NULL,
+  `first_name` varchar(20) DEFAULT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `last_name` varchar(20) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `role` varchar(20) DEFAULT NULL
+)
+/
+drop table EMPLOYEE;
+/
+
+CREATE TABLE EMPLOYEE (
+   id int(15) NOT NULL AUTO_INCREMENT,
+   staff_id varchar(20) NOT NULL UNIQUE,
+   staff_name varchar(30) DEFAULT NULL,
+   uae_id varchar(30) DEFAULT NULL,
+   batch varchar(30) DEFAULT NULL,
+   contact varchar(20) DEFAULT NULL,
+   placeofbirth varchar(15) DEFAULT NULL,
+   designation varchar(15) DEFAULT NULL,
+   staffgrade varchar(10) DEFAULT NULL,
+   nationality varchar(15) DEFAULT NULL,
+   department varchar(15) DEFAULT NULL,
+   academicqualification varchar(30) DEFAULT NULL,
+   email varchar(20) DEFAULT NULL,
+   passport varchar(15) DEFAULT NULL,
+   driving_license varchar(30) DEFAULT NULL,
+   dob varchar(10) DEFAULT NULL,
+   doj varchar(10) DEFAULT NULL,
+   ojtstartdate varchar(10) DEFAULT NULL,
+   ojtenddate varchar(10) DEFAULT NULL,
+   areaofwork varchar(20) DEFAULT NULL,
+   nsstatus varchar(20) DEFAULT NULL,
+   nsstartdate varchar(10) DEFAULT NULL,
+   ns_end_date varchar(10) DEFAULT NULL,
+   _300hrs varchar(20) DEFAULT NULL,
+   logbook varchar(20) DEFAULT NULL,
+   major varchar(20) DEFAULT NULL,
+   linemanager varchar(30) DEFAULT NULL,
+   workinghrs varchar(20) DEFAULT NULL,
+   collegemodules varchar(20) DEFAULT NULL,
+   specifymodules varchar(30) DEFAULT NULL,
+   basic_license varchar(10) DEFAULT NULL,
+   l3Course_type varchar(10) DEFAULT NULL,
+   a380project varchar(10) DEFAULT NULL,
+   rfid_project_member varchar(10) DEFAULT NULL,
+   engine_change_project varchar(10) DEFAULT NULL,
+   cor_certificate varchar(10) DEFAULT NULL,
+   PRIMARY KEY ( id )
+);
+
+
+insert into employee(`id`,`staff_id`,`staff_name`,`uae_id`,`batch`,`contact`,`placeofbirth`,`designation`,`staffgrade`,`nationality`,`department`,`academicqualification`,`email`,`passport`,`driving_license`,`dob`,`doj`,`ojtstartdate`,`ojtenddate`,`areaofwork`,`nsstatus`,`nsstartdate`,`ns_end_date`,`_300hrs`,`logbook`,`major`,`linemanager`,`workinghrs`,`collegemodules`,`specifymodules`,`basic_license`,`l3Course_type`,`a380project`,`rfid_project_member`,`engine_change_project`,`cor_certificate`) values (1,'A4562','Mahesh U S','Mahesh1234','A','9995717715','Trivandrum','Tech','A','Indian','CS','Btech','m@gmail.com','6644446','6544654','2018-06-19','2018-06-12','2018-06-12','2018-06-18','Light Maintenance','Not Completed','2018-06-19','2018-06-17','Completed','Completed','B1','Selvakumar Murugadoss','8Hrs','Completed','Computer','true','F','F','true','true','true');
+
+//drop table EMPLOYEE;
+

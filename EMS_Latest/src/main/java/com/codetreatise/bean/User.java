@@ -22,7 +22,7 @@ public class User {
 	
 	private String lastName;
 	
-	private String dob;
+	private LocalDate dob;
 	
 	private String gender;
 	
@@ -57,11 +57,11 @@ public class User {
 		this.lastName = lastName;
 	}
 	
-	public String getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
 
-	public void setDob(String dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 	
