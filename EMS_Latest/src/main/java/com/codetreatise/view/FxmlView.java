@@ -29,12 +29,34 @@ public enum FxmlView {
     EMPLOYEE {
         @Override
 		public String getTitle() {
-            return getStringFromResourceBundle("user.title");
+            return getStringFromResourceBundle("employee.title");
         }
 
         @Override
 		public String getFxmlFile() {
             return "/fxml/Employee.fxml";
+        }
+    },
+    LEAVE {
+        @Override
+		public String getTitle() {
+            return getStringFromResourceBundle("leave.title");
+        }
+
+        @Override
+		public String getFxmlFile() {
+            return "/fxml/Leave.fxml";
+        }
+    },
+    AOW {
+        @Override
+		public String getTitle() {
+            return getStringFromResourceBundle("areaOfWork.title");
+        }
+
+        @Override
+		public String getFxmlFile() {
+            return "/fxml/Work.fxml";
         }
     };
     

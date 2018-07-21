@@ -14,9 +14,9 @@ import javax.persistence.Table;
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
-	private long id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "employeeId", updatable = false, nullable = false)
+	private int employeeId;
 	
 	private String staffId;
 	
@@ -88,8 +88,45 @@ public class Employee {
 	
 	private String corCertificate;
 	
+	public String getTotalLeaveTaken() {
+		return totalLeaveTaken;
+	}
+
+	public void setTotalLeaveTaken(String totalLeaveTaken) {
+		this.totalLeaveTaken = totalLeaveTaken;
+	}
+
+	public String getBalLeave() {
+		return balLeave;
+	}
+
+	public void setBalLeave(String balLeave) {
+		this.balLeave = balLeave;
+	}
+
+	private String totalLeaveTaken;
+	
+	private String balLeave;
+	
+	public int getId() {
+		return employeeId;
+	}
+
+	public void setId(int id) {
+		this.employeeId = id;
+	}
+
+	
 	public String getBasicLicense() {
 		return basicLicense;
+	}
+	
+	public String getBasicLicense1() {
+		if(basicLicense.equals("Yes")){
+			return "true";
+		}
+		else 
+			return "false";
 	}
 
 	public void setBasicLicense(String basicLicense) {
@@ -99,6 +136,14 @@ public class Employee {
 	public String getL3CourseType() {
 		return l3CourseType;
 	}
+	
+	public String getL3CourseType1() {
+		if(l3CourseType.equals("Yes")){
+			return "true";
+		}
+		else 
+			return "false";
+	}
 
 	public void setL3CourseType(String l3CourseType) {
 		this.l3CourseType = l3CourseType;
@@ -106,6 +151,14 @@ public class Employee {
 
 	public String getA380Project() {
 		return a380Project;
+	}
+	
+	public String getA380Project1() {
+		if(a380Project.equals("Yes")){
+			return "true";
+		}
+		else 
+			return "false";
 	}
 
 	public void setA380Project(String a380Project) {
@@ -115,6 +168,14 @@ public class Employee {
 	public String getRfidProjectMember() {
 		return rfidProjectMember;
 	}
+	
+	public String getRfidProjectMember1() {
+		if(rfidProjectMember.equals("Yes")){
+			return "true";
+		}
+		else 
+			return "false";
+	}
 
 	public void setRfidProjectMember(String rfidProjectMember) {
 		this.rfidProjectMember = rfidProjectMember;
@@ -123,6 +184,14 @@ public class Employee {
 	public String getEngineChangeProject() {
 		return engineChangeProject;
 	}
+	
+	public String getEngineChangeProject1() {
+		if(engineChangeProject.equals("Yes")){
+			return "true";
+		}
+		else 
+			return "false";
+	}
 
 	public void setEngineChangeProject(String engineChangeProject) {
 		this.engineChangeProject = engineChangeProject;
@@ -130,6 +199,14 @@ public class Employee {
 
 	public String getCorCertificate() {
 		return corCertificate;
+	}
+	
+	public String getCorCertificate1() {
+		if(corCertificate.equals("Yes")){
+			return "true";
+		}
+		else 
+			return "false";
 	}
 
 	public void setCorCertificate(String corCertificate) {
@@ -370,7 +447,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", staffId=" + staffId + ", staffName=" + staffName + ", uaeId=" + uaeId
+		return "Employee [employeeId=" + employeeId + ", staffId=" + staffId + ", staffName=" + staffName + ", uaeId=" + uaeId
 				+ ", batch=" + batch + ", contact=" + contact + ", placeofbirth=" + placeofbirth + ", email=" + email
 				+ ", designation=" + designation + ", staffgrade=" + staffgrade + ", nationality=" + nationality
 				+ ", department=" + department + ", academicqualification=" + academicqualification + ", passport="

@@ -177,7 +177,7 @@ public class UserController implements Initializable{
     			}
     			
     		}else{
-    			User user = userService.find(Long.parseLong(userId.getText()));
+    			User user = userService.find(Long.parseLong((userId.getText())));
     			user.setFirstName(getFirstName());
     			user.setLastName(getLastName());
 //    			user.setDob(getDob());

@@ -2,29 +2,33 @@ package com.codetreatise.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
-
+import com.codetreatise.bean.AreaOfWork;
 import com.codetreatise.bean.Employee;
 import com.codetreatise.config.StageManager;
+import com.codetreatise.service.AreaOfWorkService;
 import com.codetreatise.service.EmployeeService;
 import com.codetreatise.view.FxmlView;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -33,7 +37,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -43,12 +49,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 @Controller
 public class EmployeeController implements Initializable {
-	
+
+	@FXML
+	private Label employeeId;
+
 	@FXML
 	private TextField staffID;
 
@@ -57,6 +67,9 @@ public class EmployeeController implements Initializable {
 
 	@FXML
 	private TextField uaeId;
+
+	@FXML
+	private BorderPane boarderPane;
 
 	@FXML
 	private TextField batch;
@@ -113,6 +126,9 @@ public class EmployeeController implements Initializable {
 	private Button reset;
 
 	@FXML
+	private Button backArea;
+
+	@FXML
 	private MenuItem deleteEmployees;
 
 	@FXML
@@ -141,7 +157,16 @@ public class EmployeeController implements Initializable {
 
 	@FXML
 	private TableView<Employee> employeeTable;
-	
+
+	@FXML
+	private TableView<AreaOfWork> areaOfWorkTable;
+
+	@FXML
+	private TableColumn<AreaOfWork, String> areaOfWorkTableCol;
+
+	@FXML
+	private TableColumn<AreaOfWork, Integer> noOfStaffCol;
+
 	@FXML
 	private TableColumn<Employee, Long> colEmployeeId;
 
@@ -156,21 +181,21 @@ public class EmployeeController implements Initializable {
 
 	@FXML
 	private TableColumn<Employee, LocalDate> colDOB;
-	
+
 	@FXML
 	private TableColumn<Employee, LocalDate> colDOJ;
-	
+
 	@FXML
 	private TableColumn<Employee, LocalDate> colOjtStartDate;
-	
+
 	@FXML
 	private TableColumn<Employee, LocalDate> colOjtEndDate;
-	
+
 	@FXML
-	private TableColumn<Employee, LocalDate> colNsStartDate;
-	
+	private TableColumn<Employee, LocalDate> nsStartDateCol;
+
 	@FXML
-	private TableColumn<Employee, LocalDate> colNsEndDate;
+	private TableColumn<Employee, LocalDate> nsEndDateCol;
 
 	@FXML
 	private TableColumn<Employee, String> batchCol;
@@ -185,10 +210,19 @@ public class EmployeeController implements Initializable {
 	private TableColumn<Employee, String> nationalityCol;
 
 	@FXML
-	private TableColumn<Employee, Boolean> colEdit;
+	private TableColumn<Employee, String> departmentCol;
 
 	@FXML
-	private MenuItem deleteemployees;
+	private TableColumn<Employee, String> contactCol;
+
+	@FXML
+	private TableColumn<Employee, String> designationCol;
+
+	@FXML
+	private TableColumn<Employee, String> areaOfWorkCol;
+
+	@FXML
+	private TableColumn<Employee, Boolean> colEdit;
 
 	@FXML
 	private ComboBox<String> areaOfWork;
@@ -241,6 +275,72 @@ public class EmployeeController implements Initializable {
 	@FXML
 	private CheckBox corCertificate;
 
+	@FXML
+	private TableColumn<Employee, String> nsStatusCol;
+
+	@FXML
+	private TableColumn<Employee, String> placeOfBirthCol;
+
+	@FXML
+	private TableColumn<Employee, String> academicCol;
+
+	@FXML
+	private TableColumn<Employee, String> passportCol;
+
+	@FXML
+	private TableColumn<Employee, String> drivingLicenseCol;
+
+	@FXML
+	private TableColumn<Employee, String> ojtStartDateCol;
+
+	@FXML
+	private TableColumn<Employee, String> ojtEndDateCol;
+
+	@FXML
+	private TableColumn<Employee, String> threeHundredCol;
+
+	@FXML
+	private TableColumn<Employee, String> logBookCol;
+
+	@FXML
+	private TableColumn<Employee, String> majorCol;
+
+	@FXML
+	private TableColumn<Employee, String> lineOfManagerCol;
+
+	@FXML
+	private TableColumn<Employee, String> workingHrsCol;
+
+	@FXML
+	private TableColumn<Employee, String> collegeModulesCol;
+
+	@FXML
+	private TableColumn<Employee, String> specifyModulesCol;
+
+	@FXML
+	private TableColumn<Employee, String> basicLicenseCol;
+
+	@FXML
+	private TableColumn<Employee, String> l3CourseTypeCol;
+
+	@FXML
+	private TableColumn<Employee, String> A380ProjectCol;
+
+	@FXML
+	private TableColumn<Employee, String> rfidProjectMemberCol;
+
+	@FXML
+	private TableColumn<Employee, String> engineChangeProjectCol;
+
+	@FXML
+	private TableColumn<Employee, String> cORCertificateCol;
+
+	@FXML
+	private TableColumn<Employee, String> totalLeaveTakenCol;
+
+	@FXML
+	private TableColumn<Employee, String> balLeaveCol;
+
 	@Lazy
 	@Autowired
 	private StageManager stageManager;
@@ -248,7 +348,12 @@ public class EmployeeController implements Initializable {
 	@Autowired
 	private EmployeeService employeeService;
 
+	@Autowired
+	private AreaOfWorkService areaService;
+
 	private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
+	private ObservableList<AreaOfWork> areaOfWorkList = FXCollections.observableArrayList();
+
 	private ObservableList<String> areaOfWorkDropDown = FXCollections.observableArrayList("Light Maintenance",
 			"Heavy Maintenance", "Line Maintenance", "On National Service", "Seconded to Business", "Others");
 	private ObservableList<String> lineManagerDropDown = FXCollections.observableArrayList("Abdul Majeed Hassan Jeizan",
@@ -268,6 +373,11 @@ public class EmployeeController implements Initializable {
 		Platform.exit();
 	}
 
+	@FXML
+	void leaveModule(ActionEvent event) {
+		stageManager.switchScene(FxmlView.LEAVE);
+	}
+
 	/**
 	 * Logout and go to the login page
 	 */
@@ -279,98 +389,282 @@ public class EmployeeController implements Initializable {
 	@FXML
 	void reset(ActionEvent event) {
 		clearFields();
+		loadEmployeeDetails();
 	}
 
 	@FXML
 	private void searchEmployee(ActionEvent event) {
+		Employee employee = new Employee();
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Validation Error");
+		alert.setHeaderText(null);
+
+		// if (staffID.getText().isEmpty() && staffName.getText().isEmpty()
+		// && (areaOfWork.getSelectionModel().getSelectedItem() == null)) {
+		// clearFields();
+		// loadEmployeeDetails();
+		// } else
+		if (!staffID.getText().isEmpty()) {
+			employee = employeeService.findById(((staffID.getText())));
+			if (staffID.getText().equals(employee.getStaffid())) {
+				loadBySearch(staffID.getText());
+
+			}
+		}
+
+		else if (!staffName.getText().isEmpty()) {
+			List<Employee> p = employeeService.findByName(((staffName.getText())));
+			employeeList.clear();
+			for (Employee n : p) {
+				if (staffName.getText().equals(n.getStaffName())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		}
+
+		else if (areaOfWork.getSelectionModel().getSelectedItem() != null) {
+			String text = areaOfWork.getSelectionModel().getSelectedItem();
+			List<Employee> p = employeeService.findByAreaOfWork(text);
+			employeeList.clear();
+			for (Employee n : p) {
+				if (text.equals(n.getAreaofwork())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (!uaeId.getText().isEmpty()) {
+			String text = uaeId.getText();
+			List<Employee> p = employeeService.findByUAEID(text);
+			employeeList.clear();
+			for (Employee n : p) {
+				if (text.equals(n.getUaeid())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (lineManager.getSelectionModel().getSelectedItem() != null) {
+			String text = lineManager.getSelectionModel().getSelectedItem();
+			List<Employee> p = employeeService.findByLineManager(text);
+			employeeList.clear();
+			for (Employee n : p) {
+				if (text.equals(n.getLinemanager())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (!email.getText().isEmpty()) {
+			List<Employee> p = employeeService.findByEmail(((email.getText())));
+			employeeList.clear();
+			for (Employee n : p) {
+				if (email.getText().equals(n.getEmail())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (!contact.getText().isEmpty()) {
+			List<Employee> p = employeeService.findByContact(((contact.getText())));
+			employeeList.clear();
+			for (Employee n : p) {
+				if (contact.getText().equals(n.getContact())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (!batch.getText().isEmpty()) {
+			List<Employee> p = employeeService.findByBatch(((batch.getText())));
+			employeeList.clear();
+			for (Employee n : p) {
+				if (batch.getText().equals(n.getBatch())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (!designation.getText().isEmpty()) {
+			List<Employee> p = employeeService.findByDesignation(((designation.getText())));
+			employeeList.clear();
+			for (Employee n : p) {
+				if (designation.getText().equals(n.getDesignation())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (!department.getText().isEmpty()) {
+			List<Employee> p = employeeService.findByDepartment(((department.getText())));
+			employeeList.clear();
+			for (Employee n : p) {
+				if (department.getText().equals(n.getDepartment())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (nsStatus.getSelectionModel().getSelectedItem() != null) {
+			String text = nsStatus.getSelectionModel().getSelectedItem();
+			List<Employee> p = employeeService.findByNsStatus(text);
+			employeeList.clear();
+			for (Employee n : p) {
+				if (text.equals(n.getNSstatus())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		} else if (!ojtStartDate.getEditor().getText().isEmpty()) {
+			Date text = null;
+			try {
+				text = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(ojtStartDate.getEditor().getText());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			List<Employee> p = employeeService.findByOjtStart(text);
+			employeeList.clear();
+			for (Employee n : p) {
+				if (text.equals(n.getOjtstartdate())) {
+					employeeList.addAll(n);
+					employeeTable.setItems(employeeList);
+				}
+			}
+		}
+
+	}
+
+	private void loadBySearch(String string) {
+		employeeList.clear();
+		employeeList.addAll(employeeService.findById(string));
+		employeeTable.setItems(employeeList);
 	}
 
 	@FXML
 	private void saveEmployee(ActionEvent event) {
-
-
-			if (staffID.getText() != null || staffID.getText() != "" || staffName.getText() == ""
-					|| batch.getText() == "" || nationality.getText() == "" || email.getText() == "") {
+		Employee employee = new Employee();
+		if (emptyValidation("Staff Id", staffID.getText().isEmpty())
+		// && validate("Staff Name", getstaffName(), "^[\\p{L} .'-]+$")
+		// && emptyValidation("Nationality",
+		// nationality.getText().isEmpty())
+		// && emptyValidation("Email", email.getText().isEmpty())
+		// && emptyValidation("DOB",
+		// dob.getEditor().getText().isEmpty())
+		// && emptyValidation("OJT Start Date",
+		// ojtStartDate.getEditor().getText().isEmpty())
+		// && emptyValidation("OJT End Date",
+		// ojtEndDate.getEditor().getText().isEmpty())
+		// && emptyValidation("Line Manager", getLineManager() == null)
+		// && emptyValidation("Major", getmajor() == null)
+		// && emptyValidation("Batch", batch.getText().isEmpty())
+		) {
+			System.out.println("employeeId.getText():" + employeeId.getText());
+			// Employee employee2 = employeeService.find2((staffID.getText()));
+			if (employeeId.getText() == null || employeeId.getText().isEmpty()) {
 				if (validate("Email", getEmail(), "[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")) {
-
-					Employee employee = new Employee();
-					employee.setStaffid(getStaffId());
-					employee.setStaffName(getstaffName());
-					employee.setUaeid(getUaeid());
-					employee.setBatch(getBatch());
-					employee.setPlaceofbirth(getPlaceofbirth());
-					employee.setDesignation(getDesignation());
-					employee.setStaffgrade(getStaffgrade());
-					employee.setNationality(getNationality());
-					employee.setDepartment(getDepartment());
-					employee.setContact(getContact());
-					employee.setAcademicqualification(getAcademicqualification());
-					employee.setPassport(getPassport());
-					employee.setPlaceofbirth(getPlaceofbirth());
-					employee.setStaffgrade(getStaffgrade());
-					employee.setAcademicqualification(getAcademicqualification());
-					employee.setDrivinglicense(getDrivinglicense());
-					employee.setLinemanager(getLineManager());
-					employee.setAreaofwork(getAreaOfWork());
-					employee.set_300hrs(getThreeHundredHrs());
-					employee.setCollegemodules(getCollegeModules());
-					employee.setLogbook(getLogBook());
-					employee.setMajor(getmajor());
-					employee.setWorkinghrs(getworkingHrs());
-					employee.setNSstatus(getNsStatus());
-					employee.setSpecifymodules(getSpecifyModules());
-					employee.setDob(getDob());
-					employee.setDoj(getDoj());
-					employee.setOjtstartdate(getOjtStartDate());
-					employee.setOjtenddate(getOjtEndDate());
-					employee.setNSstartdate(getNsStartDate());
-					employee.setNSenddate(getNsEndDate());
-					employee.setEmail(getEmail());
-					if (basicLicense.isSelected()) {
-						employee.setBasicLicense("true");
+					updateDB(employee);
+					if (employee.getWorkinghrs().equals("12Hrs")) {
+						employee.setBalLeave("15");
 					} else {
-						employee.setBasicLicense("F");
+						employee.setBalLeave("22");
 					}
-					if (l3CourseType.isSelected()) {
-						employee.setL3CourseType("true");
-					} else {
-						employee.setL3CourseType("F");
-					}
-					if (a380Project.isSelected()) {
-						employee.setA380Project("true");
-					} else {
-						employee.setA380Project("F");
-					}
-					if (rfidProjectMember.isSelected()) {
-						employee.setRfidProjectMember("true");
-					} else {
-						employee.setRfidProjectMember("F");
-					}
-					if (engineChangeProject.isSelected()) {
-						employee.setEngineChangeProject("true");
-					} else {
-						employee.setEngineChangeProject("true");
-					}
-					if (corCertificate.isSelected()) {
-						employee.setCorCertificate("true");
-					} else {
-						employee.setCorCertificate("F");
-					}
+					employee.setTotalLeaveTaken("0");
 					Employee newEmployee = employeeService.save(employee);
-
 					saveAlert(newEmployee);
 				}
 
 			} else {
-				Employee employee = employeeService.find(Long.parseLong(staffID.getText()));
-				employee.setStaffName(getstaffName());
-				employee.setDob(getDob());
+				employee = employeeService.find(Integer.parseInt((employeeId.getText())));
+				updateDB(employee);
 				Employee updatedemployee = employeeService.update(employee);
 				updateAlert(updatedemployee);
 			}
 
-			 clearFields();
-			 loadEmployeeDetails();
+			clearFields();
+			loadEmployeeDetails();
+		}
+
+	}
+
+	@FXML
+	void clickAreaOfWork(ActionEvent event) {
+		areaOfWorkList.clear();
+		stageManager.switchScene(FxmlView.AOW);
+		areaOfWorkList.addAll(areaService.findAll());
+		try {
+			areaOfWorkTable.setItems(areaOfWorkList);
+		} catch (Exception e) {
+			System.out.println(e + "Empty Data in AreaOfWork table");
+		}
+		areaOfWorkTableCol.setCellValueFactory(new PropertyValueFactory<>("areaOfWork"));
+		noOfStaffCol.setCellValueFactory(new PropertyValueFactory<>("count"));
+
+	}
+
+	@FXML
+	private void backArea(ActionEvent event) throws IOException {
+		stageManager.switchScene(FxmlView.EMPLOYEE);
+	}
+
+	private Employee updateDB(Employee employee) {
+		employee.setStaffid(getStaffId());
+		employee.setStaffName(getstaffName());
+		employee.setUaeid(getUaeid());
+		employee.setBatch(getBatch());
+		employee.setPlaceofbirth(getPlaceofbirth());
+		employee.setDesignation(getDesignation());
+		employee.setStaffgrade(getStaffgrade());
+		employee.setNationality(getNationality());
+		employee.setDepartment(getDepartment());
+		employee.setContact(getContact());
+		employee.setAcademicqualification(getAcademicqualification());
+		employee.setPassport(getPassport());
+		employee.setPlaceofbirth(getPlaceofbirth());
+		employee.setStaffgrade(getStaffgrade());
+		employee.setAcademicqualification(getAcademicqualification());
+		employee.setDrivinglicense(getDrivinglicense());
+		employee.setLinemanager(getLineManager());
+		employee.setAreaofwork(getAreaOfWork());
+		employee.set_300hrs(getThreeHundredHrs());
+		employee.setCollegemodules(getCollegeModules());
+		employee.setLogbook(getLogBook());
+		employee.setMajor(getmajor());
+		employee.setWorkinghrs(getworkingHrs());
+		employee.setNSstatus(getNsStatus());
+		employee.setSpecifymodules(getSpecifyModules());
+		employee.setDob(getDob());
+		employee.setDoj(getDoj());
+		employee.setOjtstartdate(getOjtStartDate());
+		employee.setOjtenddate(getOjtEndDate());
+		employee.setNSstartdate(getNsStartDate());
+		employee.setNSenddate(getNsEndDate());
+		employee.setEmail(getEmail());
+		if (basicLicense.isSelected()) {
+			employee.setBasicLicense("Yes");
+		} else {
+			employee.setBasicLicense("No");
+		}
+		if (l3CourseType.isSelected()) {
+			employee.setL3CourseType("Yes");
+		} else {
+			employee.setL3CourseType("No");
+		}
+		if (a380Project.isSelected()) {
+			employee.setA380Project("Yes");
+		} else {
+			employee.setA380Project("No");
+		}
+		if (rfidProjectMember.isSelected()) {
+			employee.setRfidProjectMember("Yes");
+		} else {
+			employee.setRfidProjectMember("No");
+		}
+		if (engineChangeProject.isSelected()) {
+			employee.setEngineChangeProject("Yes");
+		} else {
+			employee.setEngineChangeProject("No");
+		}
+		if (corCertificate.isSelected()) {
+			employee.setCorCertificate("Yes");
+		} else {
+			employee.setCorCertificate("No");
+		}
+
+		return employee;
 
 	}
 
@@ -391,7 +685,8 @@ public class EmployeeController implements Initializable {
 	}
 
 	private void clearFields() {
-		staffID.setText(null);
+		employeeId.setText(null);
+		staffID.clear();
 		staffName.clear();
 		dob.getEditor().clear();
 		doj.getEditor().clear();
@@ -449,6 +744,10 @@ public class EmployeeController implements Initializable {
 		alert.showAndWait();
 	}
 
+	public String getEmployeeId() {
+		return employeeId.getText();
+	}
+
 	public String getStaffId() {
 		return staffID.getText();
 	}
@@ -504,23 +803,23 @@ public class EmployeeController implements Initializable {
 	public LocalDate getDob() {
 		return dob.getValue();
 	}
-	
+
 	public LocalDate getDoj() {
 		return doj.getValue();
 	}
-	
+
 	public LocalDate getOjtStartDate() {
 		return ojtStartDate.getValue();
 	}
-	
+
 	public LocalDate getOjtEndDate() {
 		return ojtEndDate.getValue();
 	}
-	
+
 	public LocalDate getNsStartDate() {
 		return nsStartDate.getValue();
 	}
-	
+
 	public LocalDate getNsEndDate() {
 		return nsEndDate.getValue();
 	}
@@ -602,46 +901,84 @@ public class EmployeeController implements Initializable {
 		setColumnProperties();
 
 		// Add all employees into table
-		 loadEmployeeDetails();
+		loadEmployeeDetails();
 	}
 
 	/*
 	 * Set All employeeTable column properties
 	 */
 	private void setColumnProperties() {
-//		Override date format in table
-		 colDOB.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<LocalDate>() {
-			 String pattern = "dd/MM/yyyy";
-			 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
-		     @Override 
-		     public String toString(LocalDate date) {
-		         if (date != null) {
-		             return dateFormatter.format(date);
-		         } else {
-		             return "";
-		         }
-		     }
+		// Override date format in table
+		colDOB.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<LocalDate>() {
+			String pattern = "dd/MM/yyyy";
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
 
-		     @Override 
-		     public LocalDate fromString(String string) {
-		         if (string != null && !string.isEmpty()) {
-		             return LocalDate.parse(string, dateFormatter);
-		         } else {
-		             return null;
-		         }
-		     }
-		 }));
-		
-		 colstaffID.setCellValueFactory(new PropertyValueFactory<>("id"));
-		 staffNameCol.setCellValueFactory(new PropertyValueFactory<>("staffName"));
-		 uaeIdCol.setCellValueFactory(new PropertyValueFactory<>("uae_id"));
-		 colDOB.setCellValueFactory(new PropertyValueFactory<>("dob"));
-		 batchCol.setCellValueFactory(new PropertyValueFactory<>("batch"));
-		 grade.setCellValueFactory(new PropertyValueFactory<>("staffgrade"));
-		 nationalityCol.setCellValueFactory(new PropertyValueFactory<>("nationality"));
-		 colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		 colDOJ.setCellValueFactory(new PropertyValueFactory<>("doj"));
-		 colEdit.setCellFactory(cellFactory);
+			@Override
+			public String toString(LocalDate date) {
+				if (date != null) {
+					return dateFormatter.format(date);
+				} else {
+					return "";
+				}
+			}
+
+			@Override
+			public LocalDate fromString(String string) {
+				if (string != null && !string.isEmpty()) {
+					return LocalDate.parse(string, dateFormatter);
+				} else {
+					return null;
+				}
+			}
+		}));
+
+		ScrollPane sp = new ScrollPane();
+		sp.setContent(employeeTable);
+		sp.setPrefSize(1050, 600);
+		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		boarderPane.setRight(sp);
+		BorderPane.setMargin(sp, new Insets(0, 0, 10, 10));
+
+		colstaffID.setCellValueFactory(new PropertyValueFactory<>("staffid"));
+		staffNameCol.setCellValueFactory(new PropertyValueFactory<>("staffName"));
+		uaeIdCol.setCellValueFactory(new PropertyValueFactory<>("uaeid"));
+		colDOB.setCellValueFactory(new PropertyValueFactory<>("dob"));
+		batchCol.setCellValueFactory(new PropertyValueFactory<>("batch"));
+		grade.setCellValueFactory(new PropertyValueFactory<>("staffgrade"));
+		nationalityCol.setCellValueFactory(new PropertyValueFactory<>("nationality"));
+		colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+		colDOJ.setCellValueFactory(new PropertyValueFactory<>("doj"));
+		departmentCol.setCellValueFactory(new PropertyValueFactory<>("department"));
+		contactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+		designationCol.setCellValueFactory(new PropertyValueFactory<>("designation"));
+		nsStatusCol.setCellValueFactory(new PropertyValueFactory<>("NSstatus"));
+		nsEndDateCol.setCellValueFactory(new PropertyValueFactory<>("NS_end_date"));
+		nsStartDateCol.setCellValueFactory(new PropertyValueFactory<>("NSstartdate"));
+		areaOfWorkCol.setCellValueFactory(new PropertyValueFactory<>("areaofwork"));
+		placeOfBirthCol.setCellValueFactory(new PropertyValueFactory<>("placeofbirth"));
+		academicCol.setCellValueFactory(new PropertyValueFactory<>("academicqualification"));
+		passportCol.setCellValueFactory(new PropertyValueFactory<>("passport"));
+		drivingLicenseCol.setCellValueFactory(new PropertyValueFactory<>("drivinglicense"));
+		ojtStartDateCol.setCellValueFactory(new PropertyValueFactory<>("ojtstartdate"));
+		ojtEndDateCol.setCellValueFactory(new PropertyValueFactory<>("ojtenddate"));
+		threeHundredCol.setCellValueFactory(new PropertyValueFactory<>("_300hrs"));
+		logBookCol.setCellValueFactory(new PropertyValueFactory<>("logbook"));
+		majorCol.setCellValueFactory(new PropertyValueFactory<>("major"));
+		lineOfManagerCol.setCellValueFactory(new PropertyValueFactory<>("linemanager"));
+		workingHrsCol.setCellValueFactory(new PropertyValueFactory<>("workinghrs"));
+		collegeModulesCol.setCellValueFactory(new PropertyValueFactory<>("collegemodules"));
+		specifyModulesCol.setCellValueFactory(new PropertyValueFactory<>("specifymodules"));
+		basicLicenseCol.setCellValueFactory(new PropertyValueFactory<>("basicLicense"));
+		l3CourseTypeCol.setCellValueFactory(new PropertyValueFactory<>("l3CourseType"));
+		A380ProjectCol.setCellValueFactory(new PropertyValueFactory<>("a380Project"));
+		rfidProjectMemberCol.setCellValueFactory(new PropertyValueFactory<>("rfidProjectMember"));
+		engineChangeProjectCol.setCellValueFactory(new PropertyValueFactory<>("engineChangeProject"));
+		cORCertificateCol.setCellValueFactory(new PropertyValueFactory<>("corCertificate"));
+		totalLeaveTakenCol.setCellValueFactory(new PropertyValueFactory<>("totalLeaveTaken"));
+		balLeaveCol.setCellValueFactory(new PropertyValueFactory<>("balLeave"));
+
+		colEdit.setCellFactory(cellFactory);
 	}
 
 	Callback<TableColumn<Employee, Boolean>, TableCell<Employee, Boolean>> cellFactory = new Callback<TableColumn<Employee, Boolean>, TableCell<Employee, Boolean>>() {
@@ -674,49 +1011,49 @@ public class EmployeeController implements Initializable {
 						setGraphic(btnEdit);
 						setAlignment(Pos.CENTER);
 						setText(null);
-						staffID.setEditable(false);
+						employeeId.setVisible(false);
 					}
 				}
 
 				private void updateEmployee(Employee employee) {
-					 staffID.setText((employee.getStaffid()));
-					 staffName.setText(employee.getStaffName());
-					 uaeId.setText(employee.getUaeid());
-					 dob.setValue(employee.getDob());
-					 batch.setText(employee.getBatch());
-					 doj.setValue(employee.getDoj());
-					 ojtStartDate.setValue(employee.getOjtstartdate());
-					 ojtEndDate.setValue(employee.getOjtenddate());
-					 nsStartDate.setValue(employee.getNSstartdate());
-					 nsEndDate.setValue(employee.getNS_end_date());
-					 placeOfBirth.setText(employee.getPlaceofbirth());
-					 designation.setText(employee.getDesignation());
-					 staffGrade.setText(employee.getStaffgrade());
-					 nationality.setText(employee.getNationality());
-					 department.setText(employee.getDepartment());
-					 academicQualification.setText(employee.getAcademicqualification());
-					 passport.setText(employee.getPassport());
-					 drivingLicense.setText(employee.getDrivinglicense());
-					 contact.setText(employee.getContact());
-					 email.setText(employee.getEmail());
-//					 noOfLeavesTaken.setText(employee.get);
-//					 balanceNoOfLeaves.setText(employee.get);
-					 areaOfWork.setValue(employee.getAreaofwork());
-					 nsStatus.setValue(employee.getNSstatus());
-					 threeHundredHrs.setValue(employee.get_300hrs());
-					 logBook.setValue(employee.getLogbook());
-					 major.setValue(employee.getMajor());
-					 lineManager.setValue(employee.getLinemanager());
-					 workingHrs.setValue(employee.getWorkinghrs());
-					 collegeModules.setValue(employee.getCollegemodules());
-					 specifyModulesNotCompleted.setText(employee.getSpecifymodules());
-					 basicLicense.setSelected(Boolean.parseBoolean(employee.getBasicLicense()));
-					 l3CourseType.setSelected(Boolean.parseBoolean(employee.getL3CourseType()));
-					 a380Project.setSelected(Boolean.parseBoolean(employee.getA380Project()));
-					 rfidProjectMember.setSelected(Boolean.parseBoolean(employee.getRfidProjectMember()));
-					 engineChangeProject.setSelected(Boolean.parseBoolean(employee.getEngineChangeProject()));
-					 corCertificate.setSelected(Boolean.parseBoolean(employee.getCorCertificate()));
-					 
+					employeeId.setText(Integer.toString(employee.getId()));
+					staffID.setText((employee.getStaffid()));
+					staffName.setText(employee.getStaffName());
+					uaeId.setText(employee.getUaeid());
+					dob.setValue(employee.getDob());
+					batch.setText(employee.getBatch());
+					doj.setValue(employee.getDoj());
+					ojtStartDate.setValue(employee.getOjtstartdate());
+					ojtEndDate.setValue(employee.getOjtenddate());
+					nsStartDate.setValue(employee.getNSstartdate());
+					nsEndDate.setValue(employee.getNS_end_date());
+					placeOfBirth.setText(employee.getPlaceofbirth());
+					designation.setText(employee.getDesignation());
+					staffGrade.setText(employee.getStaffgrade());
+					nationality.setText(employee.getNationality());
+					department.setText(employee.getDepartment());
+					academicQualification.setText(employee.getAcademicqualification());
+					passport.setText(employee.getPassport());
+					drivingLicense.setText(employee.getDrivinglicense());
+					contact.setText(employee.getContact());
+					email.setText(employee.getEmail());
+					// noOfLeavesTaken.setText(employee.get);
+					// balanceNoOfLeaves.setText(employee.get);
+					areaOfWork.setValue(employee.getAreaofwork());
+					nsStatus.setValue(employee.getNSstatus());
+					threeHundredHrs.setValue(employee.get_300hrs());
+					logBook.setValue(employee.getLogbook());
+					major.setValue(employee.getMajor());
+					lineManager.setValue(employee.getLinemanager());
+					workingHrs.setValue(employee.getWorkinghrs());
+					collegeModules.setValue(employee.getCollegemodules());
+					specifyModulesNotCompleted.setText(employee.getSpecifymodules());
+					basicLicense.setSelected(Boolean.parseBoolean(employee.getBasicLicense1()));
+					l3CourseType.setSelected(Boolean.parseBoolean(employee.getL3CourseType1()));
+					a380Project.setSelected(Boolean.parseBoolean(employee.getA380Project1()));
+					rfidProjectMember.setSelected(Boolean.parseBoolean(employee.getRfidProjectMember1()));
+					engineChangeProject.setSelected(Boolean.parseBoolean(employee.getEngineChangeProject1()));
+					corCertificate.setSelected(Boolean.parseBoolean(employee.getCorCertificate1()));
 
 				}
 			};
@@ -753,11 +1090,22 @@ public class EmployeeController implements Initializable {
 		}
 	}
 
+	private boolean emptyValidation(String field, boolean empty) {
+		if (!empty) {
+			return true;
+		} else {
+			validationAlert(field, true);
+			return false;
+		}
+	}
+
 	private void validationAlert(String field, boolean empty) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Validation Error");
 		alert.setHeaderText(null);
-		if (field.equals("Role"))
+		if (field.equals("lineManager"))
+			alert.setContentText("Please Select " + field);
+		else if (field.equals("major"))
 			alert.setContentText("Please Select " + field);
 		else {
 			if (empty)
