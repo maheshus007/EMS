@@ -30,15 +30,15 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(entity);
 	}
 
-	@Override
-	public void delete(Long id) {
-		userRepository.delete(id);
-	}
-
-	@Override
-	public User find(Long id) {
-		return userRepository.findOne(id);
-	}
+//	@Override
+//	public void delete(Long id) {
+//		userRepository.delete(id);
+//	}
+//
+//	@Override
+//	public User find(Long id) {
+//		return userRepository.findOne(id);
+//	}
 
 	@Override
 	public List<User> findAll() {
@@ -64,6 +64,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteInBatch(List<User> users) {
 		userRepository.deleteInBatch(users);
+	}
+
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public User find(int l) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User findById(String p) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

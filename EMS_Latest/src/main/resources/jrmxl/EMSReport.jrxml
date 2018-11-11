@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EMSReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed807f45-420d-4381-9de8-525e6caf6534">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="124"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F5F5DC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#FFFFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F5F5DC">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#FFFFBF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F5F5DC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#FFFFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="abc3cd7f-99d6-4834-9850-a739a6acd3fc"/>
+	<subDataset name="Table Dataset 2" uuid="3683828e-7d46-4d0f-9b40-e8b9535f40ec"/>
+	<subDataset name="New Dataset 1" uuid="1cec326c-5fd2-439a-b7fc-5232fc22b172">
+		<queryString language="SQL">
+			<![CDATA[select * from employee]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="Table Dataset 3" uuid="c58d1634-092f-42a6-b69c-c171a76ca431"/>
+	<subDataset name="Table Dataset 4" uuid="ff4d746f-21d2-4d09-8d0f-67106b4db432"/>
+	<subDataset name="Table Dataset 5" uuid="a49081f9-62ae-4096-9563-3ada264635f5"/>
+	<subDataset name="dataset1" uuid="15313613-3906-4211-b6ea-430a94491719"/>
+	<subDataset name="Table Dataset 6" uuid="55b3b4ad-f27c-4768-ac64-3b222a8ced90"/>
+	<subDataset name="Table Dataset 7" uuid="1e3aadb2-7d94-42ae-b31c-b6118ed26c6c"/>
+	<subDataset name="Table Dataset 8" uuid="70858d58-8524-4d4c-b148-dfa529f8174d"/>
+	<queryString>
+		<![CDATA[select * from employee where staff_id='F45623']]>
+	</queryString>
+	<field name="employee_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="staff_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="staff_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uae_id" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="batch" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contact" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="placeofbirth" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="staffgrade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nationality" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="department" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="academicqualification" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="passport" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="driving_license" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dob" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="doj" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ojtstartdate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ojtenddate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="areaofwork" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nsstatus" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nsstartdate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ns_end_date" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="_300hrs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="logbook" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="major" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="linemanager" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="workinghrs" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="collegemodules" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="specifymodules" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="basic_license" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="l3Course_type" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="a380project" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rfid_project_member" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="engine_change_project" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cor_certificate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="118" y="18" width="433" height="50" uuid="e850bd13-907d-46ab-999c-2b999f98580c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Berlin Sans FB Demi" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TEDP GRADUATE ENGINEER TRAINEE PROGRAM]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-22" y="75" width="606" height="1" uuid="f5f50397-8d13-4951-b213-2339f451b6b6"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<rectangle>
+				<reportElement x="477" y="4" width="70" height="20" uuid="e9786201-5be8-484d-b6e8-ec30b487d9fd"/>
+			</rectangle>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="484" y="7" width="100" height="20" uuid="d9cd1c6d-1776-4bd5-825a-b1b430b944fa"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="1" y="8" width="78" height="20" backcolor="#FFCC66" uuid="b11b3d91-10a5-4332-8e5b-e6d9edb46a0c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[       Staff ID]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="94" y="10" width="55" height="20" uuid="08f277c8-cd02-45c7-8191-40aca73cc872"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{staff_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="365" y="11" width="59" height="20" backcolor="#FFCC66" uuid="e3cb1e57-15fd-4e14-9f7a-aa155390d7ba"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Staff Name]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="11" width="127" height="20" uuid="0efaef39-99f9-4996-8552-d65bcee8bd8a"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="428" y="11" width="144" height="20" uuid="1bf56a91-98b8-4462-bb18-ebba7a634524"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{staff_name}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="80" y="8" width="89" height="20" uuid="5e017f66-670e-42f5-aa8d-4061036a61b9"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="576" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="427" y="102" width="101" height="20" uuid="dba5a7bb-94eb-4a8c-b925-33bc68afe39b"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{batch}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="427" y="120" width="101" height="20" uuid="00936fa4-07ce-4094-b1e7-2842f4923dd0"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="428" y="2" width="144" height="20" uuid="a2114087-3e74-4c09-9bb3-7037fd8058c7"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="428" y="42" width="100" height="20" uuid="9a2c532a-266e-4299-b2d6-3e7ca56074f0"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nationality}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="365" y="99" width="59" height="20" backcolor="#FFCC66" uuid="836a6e44-53da-4f9f-a8c7-9b8a86a3339e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Batch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="365" y="119" width="59" height="20" backcolor="#FFCC66" uuid="e05d5ba9-963c-47fa-8247-290c87f14e13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Designation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="365" y="39" width="59" height="20" backcolor="#FFCC66" uuid="57b2c8aa-bc9c-4d36-a54a-b8bfadd6d4c0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nationality]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="365" y="0" width="59" height="20" backcolor="#FFCC66" uuid="1e6fd057-d989-4da7-8456-8783547ad911"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="428" y="23" width="100" height="20" uuid="824e3574-b6fb-4192-80bd-60ba8c5a0a05"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contact}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="365" y="20" width="59" height="20" backcolor="#FFCC66" uuid="3abb7beb-289e-4062-9f79-a0f0568d3267"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contact]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="428" y="62" width="100" height="20" uuid="6d1c3c8e-c5a9-41d5-af3e-21f4e692aa10"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{staffgrade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="365" y="59" width="59" height="20" backcolor="#FFCC66" uuid="9b935501-c07d-432d-87d0-70a0f91ac035"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grade]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="427" y="83" width="101" height="20" uuid="3e48345d-e323-4079-afdb-ecf82d792d3f"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{major}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="365" y="79" width="59" height="20" backcolor="#FFCC66" uuid="c9c18cdb-4f08-4934-a5c1-cc1d668d3dd9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Major]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="123" y="62" width="150" height="20" uuid="b6141103-948f-45a3-adbb-e01c157dd60d"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{areaofwork}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="60" width="114" height="20" backcolor="#FFCC66" uuid="5897bea3-0386-4f25-bdb9-a6b7f45453e4"/>
+				<text><![CDATA[Current Area of Work]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="123" y="85" width="99" height="20" uuid="8e3f498e-6f74-4776-a3ae-d0a200bd400b"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor_certificate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="80" width="114" height="20" backcolor="#FFCC66" uuid="48fb347f-02c0-405a-8fa0-05ee22ab7c46"/>
+				<text><![CDATA[COR Certificate]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="123" y="104" width="86" height="20" uuid="6b3523a8-7ac5-4a44-8d43-ffadca5fec97"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{basic_license}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="123" y="123" width="86" height="20" uuid="af14653e-4b27-49a5-8a65-7cf62c28ab00"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nsstatus}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="123" y="143" width="86" height="20" uuid="e59bba60-838a-4252-8709-90761f5378b6"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{a380project}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="120" width="114" height="20" backcolor="#FFCC66" uuid="a9a56944-392b-4b3f-b647-a6a4ed7a3293"/>
+				<text><![CDATA[National Service]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="100" width="114" height="20" backcolor="#FFCC66" uuid="9ed484e5-0744-428e-953f-302846ccb5f0"/>
+				<text><![CDATA[Basic License]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="140" width="114" height="20" backcolor="#FFCC66" uuid="fb9f0dee-273d-4303-84bc-12156f12c102"/>
+				<text><![CDATA[Member of A380project]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="206" width="135" height="20" backcolor="#FFCC66" uuid="b2e6ec00-cca2-487b-8733-f6a3cfec0fa6"/>
+				<text><![CDATA[A320 GEN FAM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="226" width="135" height="20" backcolor="#FFCC66" uuid="4e0894fa-e3e7-4aab-a664-5747a6dc124c"/>
+				<text><![CDATA[A320 Type Training Level 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="246" width="135" height="20" backcolor="#FFCC66" uuid="dc37b638-2c7f-43cf-92ac-9b61cf58a97b"/>
+				<text><![CDATA[A380 Cat C level 1 course]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="137" y="206" width="42" height="20" uuid="f7647693-e88c-406e-b60e-2675e7208eb2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="137" y="226" width="42" height="20" uuid="de40a622-c92a-42a3-9920-bbf9f57dff16"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="137" y="246" width="42" height="20" uuid="e431efbe-58ce-4d7d-8023-ec9fe65b2887"/>
+			</rectangle>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="123" y="23" width="80" height="20" uuid="8d048612-19b7-45a0-a75f-0ee768b50349"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojtstartdate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="123" y="42" width="80" height="20" uuid="641bc935-3d51-4ec7-9403-fbcc17590bf8"/>
+				<textElement>
+					<font fontName="Berlin Sans FB" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ojtenddate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="20" width="113" height="20" backcolor="#FFCC66" uuid="19cbded5-03cb-4314-bf2e-b97a318b3a34"/>
+				<text><![CDATA[OJT Start Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="40" width="114" height="20" backcolor="#FFCC66" uuid="c254405f-0cf7-4506-ae68-628506b6b585"/>
+				<text><![CDATA[OJT End Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="359" width="294" height="20" backcolor="#FFCC66" uuid="31b69cd3-28b6-4ca0-afe9-fcea67e7ba51"/>
+				<text><![CDATA[Fuel Tank Safety Phase 1 & 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="339" width="294" height="20" backcolor="#FFCC66" uuid="118c2837-997d-4d93-b8f8-a406428e1b38"/>
+				<text><![CDATA[Electrical Wiring Interconnection System Target group 4 & 5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="319" width="294" height="20" backcolor="#FFCC66" uuid="998d67e3-f336-4ccb-9ede-6296caed4928"/>
+				<text><![CDATA[Electrical Wiring Interconnection System Target group 1 & 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="299" width="336" height="20" backcolor="#FF9900" uuid="536c9922-9f38-4c9b-9e32-19fbffb12525"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PART 145 COURSE STATUS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="379" width="294" height="20" backcolor="#FFCC66" uuid="041e2bba-a730-4259-9dd6-04c000f73035"/>
+				<text><![CDATA[ETOPS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="396" width="294" height="20" backcolor="#FFCC66" uuid="4522fc5e-6013-4110-9b89-8e164518c3d3"/>
+				<text><![CDATA[RAMP Safety]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="436" width="294" height="20" backcolor="#FFCC66" uuid="b67e7885-ea21-4ff5-9e15-8d85bc918ce8"/>
+				<text><![CDATA[Policy and Procedure Training - Maintainance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="416" width="294" height="20" backcolor="#FFCC66" uuid="09b7e614-e9ec-428c-bcf6-5491570b93e8"/>
+				<text><![CDATA[Human Factors Initial Training]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="456" width="294" height="20" backcolor="#FFCC66" uuid="c80ac9ab-e899-4eb6-b8bb-e25134a86e8b"/>
+				<text><![CDATA[EY Induction for Technical]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="513" width="295" height="20" backcolor="#FFCC66" uuid="e39c7814-d606-4177-b822-f9ecd9afad6b"/>
+				<text><![CDATA[A319/320/321 Level 2 Ramp and Transit Theory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="533" width="295" height="20" backcolor="#FFCC66" uuid="0d11060e-926d-48d7-9970-00c4f118733e"/>
+				<text><![CDATA[A319/320/321 Level 2 Ramp and Transit Practical]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="493" width="295" height="20" backcolor="#FFCC66" uuid="108071d8-1b83-402b-955a-e98547c66d01"/>
+				<text><![CDATA[Store Inspection]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="476" width="295" height="20" backcolor="#FFCC66" uuid="10339971-cf24-4861-aa19-442c83df18e6"/>
+				<text><![CDATA[Aircarft Towing and Radio Telephony]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="553" width="295" height="20" backcolor="#FFCC66" uuid="2f05b4ad-c0c9-4089-b9b2-a7c6d70f47a2"/>
+				<text><![CDATA[Human Factors Continuous Training]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="470" width="178" height="20" backcolor="#FF9900" uuid="4527e3a8-5a46-464a-b16c-a0b37f79a54f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="413" y="490" width="135" height="20" backcolor="#FFCC66" uuid="669db8dc-d0be-4329-9419-8eb196f8d012"/>
+				<text><![CDATA[Not Assigned for the Course]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="413" y="510" width="135" height="20" backcolor="#FFCC66" uuid="c648fff2-68ad-4c54-8c31-7780a43ba015"/>
+				<text><![CDATA[Course Completed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="413" y="530" width="135" height="20" backcolor="#FFCC66" uuid="5da5c5b9-7eff-45ba-ba01-be04161cff1c"/>
+				<text><![CDATA[Assigned for the Course]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="413" y="550" width="135" height="20" backcolor="#FFCC66" uuid="f7676b6a-3681-4eae-a6bb-a74213f6580a"/>
+				<text><![CDATA[Requested for the Course]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="295" y="319" width="42" height="20" uuid="7e7d8ff2-e359-4b62-a63b-cbb0f1eed261"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="339" width="42" height="20" uuid="f8d08631-4727-42b9-a2ed-cc9b2aa4c27d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="359" width="42" height="20" uuid="79a76766-6c64-4491-a0f2-c9e04970f59a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="379" width="42" height="20" uuid="3fd88d81-ad7b-4c13-91a5-dc888fbddfa0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="399" width="42" height="20" uuid="baa06333-8c23-4b88-9ec8-fb56f82c7d3a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="419" width="42" height="20" uuid="5082d014-2017-4bb4-ac34-3c00ea3c6b63"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="436" width="42" height="20" uuid="99c68c87-1626-4b80-92a4-56fa4c5f5099"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="456" width="42" height="20" uuid="ec7d6628-f7d4-4b65-85cf-ad93466dfc27"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="476" width="42" height="20" uuid="7955ae4e-9b13-4199-aa0b-d38a95d58675"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="496" width="42" height="20" uuid="d550873a-5fb5-4f32-8259-bfb6b33c566c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="516" width="42" height="20" uuid="9efd63b6-0e1f-40e6-b70f-f22eaddb8888"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="536" width="42" height="20" uuid="e924b018-d2d3-40c2-a91a-590320d74fc1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="295" y="553" width="42" height="20" uuid="3f446748-56c2-4d4c-b775-aba1865037de"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="370" y="490" width="42" height="20" uuid="12376b62-5c70-4b15-8d6c-f3c3f3720985"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="370" y="510" width="42" height="20" uuid="af6f27c6-5502-4c6b-b2d3-fad8848d603d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="370" y="530" width="42" height="20" uuid="ce456d76-33a5-45e6-9b29-0e2cd11c040d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="370" y="550" width="42" height="20" uuid="e0d539da-c731-4160-89d7-d1977d669583"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="340" y="494" width="100" height="20" uuid="c390f644-5234-4e35-9225-9bd23f211ac0"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[NA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="511" width="100" height="20" uuid="d308709b-e2ae-43bc-a852-1dacc4485ebd"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Done]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="534" width="100" height="20" uuid="da664956-b2c6-4aa4-9bf7-c04457a4ed96"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="554" width="100" height="20" uuid="4ef8a205-319d-4ff4-9c9b-617c8c02dfd7"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ASK]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="115" y="20" width="127" height="20" uuid="1d8d576b-030e-4037-b839-bea47f48f97b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="115" y="40" width="127" height="20" uuid="aa120e0e-aede-47f3-ab01-90bfab1475d0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="0" width="127" height="20" uuid="8e3262ae-8f08-4192-aaa5-75ed3d0e841c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="20" width="127" height="20" uuid="001d6072-0a4f-4d85-a398-639d6f36dd26"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="40" width="127" height="20" uuid="331bfaf8-e19c-4421-87ce-ccbbfaf06b7d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="80" width="127" height="20" uuid="588e7be9-5238-4409-8732-2999453eae0f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="60" width="127" height="20" uuid="787223d1-4418-4061-a38c-18e86e01527d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="120" width="127" height="19" uuid="009554a3-fd03-423b-8aaa-c577cc5f64c5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="425" y="100" width="127" height="20" uuid="1187461b-258d-44ed-a61e-a10000a7493d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="115" y="80" width="127" height="20" uuid="1535a337-c517-4e62-9c32-759bf4e54fe3"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="115" y="60" width="127" height="20" uuid="05dad4a0-264f-4836-8ade-a46c7e68f979"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="115" y="100" width="127" height="20" uuid="8ff8215b-d5b1-41a5-9f3f-5c043918864c"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="115" y="140" width="127" height="20" uuid="503b75ad-7093-4a92-83a0-375b01c1fe99"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="115" y="120" width="127" height="20" uuid="c70b2365-60db-4cb0-88bc-90f5e20e4b28"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

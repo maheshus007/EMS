@@ -16,6 +16,7 @@ CREATE TABLE `employee` (
   `employee_id` int(11) NOT NULL AUTO_INCREMENT,
   `staff_id` varchar(20) NOT NULL,
   `staff_name` varchar(30) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
   `uae_id` varchar(30) DEFAULT NULL,
   `batch` varchar(30) DEFAULT NULL,
   `contact` varchar(20) DEFAULT NULL,
@@ -49,9 +50,11 @@ CREATE TABLE `employee` (
   `rfid_project_member` varchar(10) DEFAULT NULL,
   `engine_change_project` varchar(10) DEFAULT NULL,
   `cor_certificate` varchar(10) DEFAULT NULL,
+  `total_leave_taken` varchar(10) DEFAULT NULL,
+  `bal_leave` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`employee_id`),
   UNIQUE KEY `staff_id` (`staff_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 /
 drop table LEAVE;
@@ -74,17 +77,13 @@ CREATE TABLE leavehistory (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /
 
-DROP TRIGGER IF EXISTS `leavetrigger`;
-CREATE TRIGGER leavetrigger AFTER INSERT ON employee FOR EACH ROW BEGIN
-insert into leavetable
-SET staff_id=new.staff_id,
-staff_name=new.staff_name,
-total_leave_taken=new.total_leave_taken,
-bal_leave=new.bal_leave,
-shift=new.workinghrs;
-END;
 /
-
+DROP TRIGGER IF EXISTS `leavetriggeronEmployeeTable`;
+CREATE TRIGGER leavetriggeronEmployeeTable AFTER INSERT ON leavehistory FOR EACH ROW BEGIN
+update employee set bal_leave=new.bal_leave,
+total_leave_taken=new.total_leave_taken
+where staff_id=new.staff_id;
+END;
 
 insert into employee(`employee_id`,`staff_id`,`staff_name`,`uae_id`,`batch`,`contact`,`placeofbirth`,`designation`,`staffgrade`,`nationality`,`department`,`academicqualification`,`email`,`passport`,`driving_license`,`dob`,`doj`,`ojtstartdate`,`ojtenddate`,`areaofwork`,`nsstatus`,`nsstartdate`,`ns_end_date`,`_300hrs`,`logbook`,`major`,`linemanager`,`workinghrs`,`collegemodules`,`specifymodules`,`basic_license`,`l3Course_type`,`a380project`,`rfid_project_member`,`engine_change_project`,`cor_certificate`) values (1,'A4562','Mahesh U S','Mahesh1234','A','9995717715','Trivandrum','Tech','A','Indian','CS','Btech','m@gmail.com','6644446','6544654','2018-06-19','2018-06-12','2018-06-12','2018-06-18','Light Maintenance','Not Completed','2018-06-19','2018-06-17','Completed','Completed','B1','Selvakumar Murugadoss','8Hrs','Completed','Computer','true','F','F','true','true','true');
 

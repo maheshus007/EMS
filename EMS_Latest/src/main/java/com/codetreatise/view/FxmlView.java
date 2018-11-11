@@ -45,7 +45,40 @@ public enum FxmlView {
 
         @Override
 		public String getFxmlFile() {
-            return "/fxml/Leave.fxml";
+            return "/fxml/LeaveScene.fxml";
+        }
+    },
+    ALLOCATION {
+        @Override
+		public String getTitle() {
+            return getStringFromResourceBundle("allocation.title");
+        }
+
+        @Override
+		public String getFxmlFile() {
+            return "/fxml/Allocation.fxml";
+        }
+    },
+    TRAINING {
+        @Override
+		public String getTitle() {
+            return getStringFromResourceBundle("training.title");
+        }
+
+        @Override
+		public String getFxmlFile() {
+            return "/fxml/Training.fxml";
+        }
+    },
+    ASSESSMENT {
+        @Override
+		public String getTitle() {
+            return getStringFromResourceBundle("assessment.title");
+        }
+
+        @Override
+		public String getFxmlFile() {
+            return "/fxml/Assessment.fxml";
         }
     },
     AOW {

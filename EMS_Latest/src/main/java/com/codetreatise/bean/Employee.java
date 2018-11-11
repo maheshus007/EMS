@@ -24,6 +24,26 @@ public class Employee {
 	
 	private String uaeId;
 	
+	private String gender;
+	
+	private String history;
+	
+	public String getHistory() {
+		return history;
+	}
+
+	public void setHistory(String history) {
+		this.history = history;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	private String batch;
 	
 	private String contact;
@@ -87,6 +107,26 @@ public class Employee {
 	private String engineChangeProject;
 	
 	private String corCertificate;
+	
+	private String post;
+	
+	public String getPost() {
+		return post;
+	}
+
+	public void setPost(String post) {
+		this.post = post;
+	}
+
+	public String getShift() {
+		return shift;
+	}
+
+	public void setShift(String shift) {
+		this.shift = shift;
+	}
+
+	private String shift;
 	
 	public String getTotalLeaveTaken() {
 		return totalLeaveTaken;
@@ -447,17 +487,19 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [employeeId=" + employeeId + ", staffId=" + staffId + ", staffName=" + staffName + ", uaeId=" + uaeId
-				+ ", batch=" + batch + ", contact=" + contact + ", placeofbirth=" + placeofbirth + ", email=" + email
-				+ ", designation=" + designation + ", staffgrade=" + staffgrade + ", nationality=" + nationality
-				+ ", department=" + department + ", academicqualification=" + academicqualification + ", passport="
-				+ passport + ", drivingLicense=" + drivingLicense + ", dob=" + dob + ", doj=" + doj + ", ojtstartdate="
-				+ ojtstartdate + ", ojtenddate=" + ojtenddate + ", areaofwork=" + areaofwork + ", NSstatus=" + NSstatus
-				+ ", NSstartdate=" + NSstartdate + ", NS_end_date=" + NS_end_date + ", _300hrs=" + _300hrs
-				+ ", logbook=" + logbook + ", major=" + major + ", linemanager=" + linemanager + ", workinghrs="
-				+ workinghrs + ", collegemodules=" + collegemodules + ", specifymodules=" + specifymodules
-				+ ", basicLicense=" + basicLicense + ", l3CourseType=" + l3CourseType + ", a380Project=" + a380Project
-				+ ", rfidProjectMember=" + rfidProjectMember + ", engineChangeProject=" + engineChangeProject
-				+ ", corCertificate=" + corCertificate + "]";
+		return "Employee [employeeId=" + employeeId + ", staffId=" + staffId + ", staffName=" + staffName + ", uaeId="
+				+ uaeId + ", gender=" + gender + ", history=" + history + ", batch=" + batch + ", contact=" + contact
+				+ ", placeofbirth=" + placeofbirth + ", email=" + email + ", designation=" + designation
+				+ ", staffgrade=" + staffgrade + ", nationality=" + nationality + ", department=" + department
+				+ ", academicqualification=" + academicqualification + ", passport=" + passport + ", drivingLicense="
+				+ drivingLicense + ", dob=" + dob + ", doj=" + doj + ", ojtstartdate=" + ojtstartdate + ", ojtenddate="
+				+ ojtenddate + ", areaofwork=" + areaofwork + ", NSstatus=" + NSstatus + ", NSstartdate=" + NSstartdate
+				+ ", NS_end_date=" + NS_end_date + ", _300hrs=" + _300hrs + ", logbook=" + logbook + ", major=" + major
+				+ ", linemanager=" + linemanager + ", workinghrs=" + workinghrs + ", collegemodules=" + collegemodules
+				+ ", specifymodules=" + specifymodules + ", basicLicense=" + basicLicense + ", l3CourseType="
+				+ l3CourseType + ", a380Project=" + a380Project + ", rfidProjectMember=" + rfidProjectMember
+				+ ", engineChangeProject=" + engineChangeProject + ", corCertificate=" + corCertificate + ", post="
+				+ post + ", shift=" + shift + ", totalLeaveTaken=" + totalLeaveTaken + ", balLeave=" + balLeave + "]";
 	}
+
 }

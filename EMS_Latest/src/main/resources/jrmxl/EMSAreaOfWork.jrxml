@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="EMSReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed807f45-420d-4381-9de8-525e6caf6534">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="abc3cd7f-99d6-4834-9850-a739a6acd3fc"/>
+	<subDataset name="Table Dataset 2" uuid="3683828e-7d46-4d0f-9b40-e8b9535f40ec"/>
+	<subDataset name="New Dataset 1" uuid="1cec326c-5fd2-439a-b7fc-5232fc22b172">
+		<queryString language="SQL">
+			<![CDATA[select * from employee]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="Table Dataset 3" uuid="c58d1634-092f-42a6-b69c-c171a76ca431"/>
+	<subDataset name="Table Dataset 4" uuid="ff4d746f-21d2-4d09-8d0f-67106b4db432"/>
+	<queryString>
+		<![CDATA[select * from areaofwork]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="area_of_work" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="count" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="220" y="25" width="142" height="50" uuid="e850bd13-907d-46ab-999c-2b999f98580c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Berlin Sans FB Demi" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AREA OF WORK]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-22" y="75" width="606" height="1" uuid="f5f50397-8d13-4951-b213-2339f451b6b6"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<rectangle>
+				<reportElement x="477" y="4" width="70" height="20" uuid="e9786201-5be8-484d-b6e8-ec30b487d9fd"/>
+			</rectangle>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="484" y="7" width="100" height="20" uuid="d9cd1c6d-1776-4bd5-825a-b1b430b944fa"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="99" y="11" width="376" height="20" backcolor="#FF9900" uuid="536c9922-9f38-4c9b-9e32-19fbffb12525"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AREA OF WORK]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="576" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="346" y="23" width="129" height="20" backcolor="#FFCC66" uuid="c3f21ca5-3ed2-48ed-9f84-78779c996116"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="131" y="23" width="214" height="20" backcolor="#FFCC66" uuid="a62d3e4d-93b7-4145-beab-1101f53ee518"/>
+				<textFieldExpression><![CDATA[$F{area_of_work}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="99" y="23" width="31" height="20" backcolor="#FFCC66" uuid="477bd843-50ab-40e9-812c-ef77a0c98b52"/>
+				<textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="99" y="2" width="31" height="20" backcolor="#FFCC66" uuid="dee012b2-765d-4725-9082-05a45f4ec53e"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="346" y="2" width="129" height="20" backcolor="#FFCC66" uuid="1371e8fa-a065-4aab-94b1-cef2ca69138d"/>
+				<text><![CDATA[Number of Employees]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="131" y="2" width="214" height="20" backcolor="#FFCC66" uuid="e8da2576-04fa-4ff5-b261-52a237da56e5"/>
+				<text><![CDATA[Area of Work]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

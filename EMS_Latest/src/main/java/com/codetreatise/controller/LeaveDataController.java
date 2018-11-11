@@ -2,28 +2,22 @@ package com.codetreatise.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
-import com.codetreatise.bean.AreaOfWork;
 import com.codetreatise.bean.Employee;
 import com.codetreatise.bean.LeaveData;
 import com.codetreatise.config.StageManager;
-import com.codetreatise.service.AreaOfWorkService;
 import com.codetreatise.service.EmployeeService;
+import com.codetreatise.service.LeaveService;
 import com.codetreatise.view.FxmlView;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,14 +28,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -58,7 +49,7 @@ import javafx.util.StringConverter;
 public class LeaveDataController implements Initializable {
 
 	@FXML
-	private Label employeeId;
+	private Label leaveId;
 
 	@FXML
 	private TextField staffID;
@@ -79,10 +70,10 @@ public class LeaveDataController implements Initializable {
 	private TextField balanceLeave;
 
 	@FXML
-	private TextField approverName;
+	private ComboBox<String> approverName;
 
 	@FXML
-	private DatePicker fromDate1;
+	private DatePicker approvedDate;
 
 	@FXML
 	private TextField shift;
@@ -101,6 +92,9 @@ public class LeaveDataController implements Initializable {
 
 	@FXML
 	private Button searchLeaveData;
+	
+	@FXML
+	private Button searchTable;
 
 	@FXML
 	private BorderPane boarderPane;
@@ -109,7 +103,7 @@ public class LeaveDataController implements Initializable {
 	private TableView<LeaveData> leaveTable;
 
 	@FXML
-	private TableColumn<LeaveData, String> colEdit;
+	private TableColumn<LeaveData, Boolean> colEdit;
 
 	@FXML
 	private TableColumn<LeaveData, String> colstaffID;
@@ -118,13 +112,13 @@ public class LeaveDataController implements Initializable {
 	private TableColumn<LeaveData, String> staffNameCol;
 
 	@FXML
-	private TableColumn<LeaveData, String> fromDateCol;
+	private TableColumn<LeaveData, LocalDate> fromDateCol;
 
 	@FXML
-	private TableColumn<LeaveData, String> toDateCol;
+	private TableColumn<LeaveData, LocalDate> toDateCol;
 
 	@FXML
-	private TableColumn<LeaveData, String> shoftCol;
+	private TableColumn<LeaveData, String> shiftCol;
 
 	@FXML
 	private TableColumn<LeaveData, String> totalLeaveTakenCol;
@@ -136,7 +130,7 @@ public class LeaveDataController implements Initializable {
 	private TableColumn<LeaveData, String> approverNameCol;
 
 	@FXML
-	private TableColumn<LeaveData, String> approvedDateCol;
+	private TableColumn<LeaveData, LocalDate> approvedDateCol;
 
 	@FXML
 	private TableColumn<LeaveData, String> leaveTypeCol;
@@ -149,17 +143,7 @@ public class LeaveDataController implements Initializable {
 
 	@FXML
 	void deleteLeaveData(ActionEvent event) {
-
-	}
-
-	@FXML
-	void saveLeaveData(ActionEvent event) {
-
-	}
-
-	@FXML
-	void searchLeaveData(ActionEvent event) {
-
+		printAlert("Deleting Staff leave records is not possible");
 	}
 
 	@Lazy
@@ -170,12 +154,16 @@ public class LeaveDataController implements Initializable {
 	private EmployeeService employeeService;
 
 	@Autowired
-	private AreaOfWorkService areaService;
+	private LeaveService leaveService;
 
 	private ObservableList<LeaveData> leaveList = FXCollections.observableArrayList();
 	private ObservableList<String> TypeOfLeaveDropDown = FXCollections.observableArrayList("Annual Leave",
 			"Emergency Leave", "Exam Leave", "Medical Leave", "Sick Leave", "University Leave");
 	private ObservableList<String> ApprovalDropDown = FXCollections.observableArrayList("Approve", "Reject");
+	private ObservableList<String> approverNameDropDown = FXCollections.observableArrayList(
+			"Abdul Majeed Hassan Jeizan", "Amer Mohamed Banialnajjar", "Faisal Mohamed Al Mulla", "Hamad Al Ali",
+			"Mahendra Lokug", "Mohammad Nour Aldin Saffi", "Mohammed Yousef", "Sameer Abdulkareem",
+			"Selvakumar Murugadoss", "Others");
 
 	@FXML
 	private void exit(ActionEvent event) {
@@ -193,11 +181,20 @@ public class LeaveDataController implements Initializable {
 	@FXML
 	void reset(ActionEvent event) {
 		clearFields();
-		loadEmployeeDetails();
+		loadLeaveDetails();
+	}
+
+	private boolean printAlert(String issue) {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Warning");
+		alert.setHeaderText(null);
+		alert.setContentText(issue);
+		alert.showAndWait();
+		return false;
 	}
 
 	@FXML
-	private void searchEmployee(ActionEvent event) {
+	private void searchLeaveData(ActionEvent event) {
 		Employee employee = new Employee();
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Validation Error");
@@ -205,9 +202,12 @@ public class LeaveDataController implements Initializable {
 
 		if (!staffID.getText().isEmpty()) {
 			employee = employeeService.findById(((staffID.getText())));
-			if (staffID.getText().equals(employee.getStaffid())) {
-				loadBySearch(staffID.getText());
-
+			if (staffID.getText().equalsIgnoreCase(employee.getStaffid())) {
+				// loadBySearch(staffID.getText());
+				staffName.setText(employee.getStaffName());
+				totalLeaveTaken.setText(employee.getTotalLeaveTaken());
+				balanceLeave.setText(employee.getBalLeave());
+				shift.setText(employee.getWorkinghrs());
 			}
 		}
 
@@ -215,121 +215,20 @@ public class LeaveDataController implements Initializable {
 			List<Employee> p = employeeService.findByName(((staffName.getText())));
 			leaveList.clear();
 			for (Employee n : p) {
-				if (staffName.getText().equals(n.getStaffName())) {
-					leaveList.addAll(n);
-					leaveTable.setItems(employeeList);
+				if (staffName.getText().equalsIgnoreCase(n.getStaffName())) {
+					staffID.setText(n.getStaffid());
+					totalLeaveTaken.setText(n.getTotalLeaveTaken());
+					balanceLeave.setText(n.getBalLeave());
+					shift.setText(n.getWorkinghrs());
 				}
 			}
 		}
-		//
-		// else if (areaOfWork.getSelectionModel().getSelectedItem() != null) {
-		// String text = areaOfWork.getSelectionModel().getSelectedItem();
-		// List<Employee> p = employeeService.findByAreaOfWork(text);
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (text.equals(n.getAreaofwork())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// } else if (!uaeId.getText().isEmpty()) {
-		// String text = uaeId.getText();
-		// List<Employee> p = employeeService.findByUAEID(text);
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (text.equals(n.getUaeid())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// } else if (lineManager.getSelectionModel().getSelectedItem() != null)
-		// {
-		// String text = lineManager.getSelectionModel().getSelectedItem();
-		// List<Employee> p = employeeService.findByLineManager(text);
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (text.equals(n.getLinemanager())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// }else if (!email.getText().isEmpty()) {
-		// List<Employee> p = employeeService.findByEmail(((email.getText())));
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (email.getText().equals(n.getEmail())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// }else if (!contact.getText().isEmpty()) {
-		// List<Employee> p =
-		// employeeService.findByContact(((contact.getText())));
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (contact.getText().equals(n.getContact())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// }else if (!batch.getText().isEmpty()) {
-		// List<Employee> p = employeeService.findByBatch(((batch.getText())));
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (batch.getText().equals(n.getBatch())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// }else if (!designation.getText().isEmpty()) {
-		// List<Employee> p =
-		// employeeService.findByDesignation(((designation.getText())));
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (designation.getText().equals(n.getDesignation())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// }else if (!department.getText().isEmpty()) {
-		// List<Employee> p =
-		// employeeService.findByDepartment(((department.getText())));
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (department.getText().equals(n.getDepartment())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// }else if (nsStatus.getSelectionModel().getSelectedItem() != null) {
-		// String text = nsStatus.getSelectionModel().getSelectedItem();
-		// List<Employee> p = employeeService.findByNsStatus(text);
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (text.equals(n.getNSstatus())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// }else if (!ojtStartDate.getEditor().getText().isEmpty()) {
-		// Date text = null;
-		// try {
-		// text = (Date) new
-		// SimpleDateFormat("dd/MM/yyyy").parse(ojtStartDate.getEditor().getText());
-		// } catch (ParseException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// List<Employee> p = employeeService.findByOjtStart(text);
-		// employeeList.clear();
-		// for (Employee n : p) {
-		// if (text.equals(n.getOjtstartdate())) {
-		// employeeList.addAll(n);
-		// employeeTable.setItems(employeeList);
-		// }
-		// }
-		// }
 
+	}
+	
+	@FXML
+	private void searchTable(ActionEvent event) {
+		
 	}
 
 	private void loadBySearch(String string) {
@@ -339,134 +238,151 @@ public class LeaveDataController implements Initializable {
 	}
 
 	@FXML
-	private void saveEmployee(ActionEvent event) {
-		// Employee employee = new Employee();
-		// if (emptyValidation("Staff Id", staffID.getText().isEmpty())
-		// && validate("Staff Name", getstaffName(), "^[\\p{L} .'-]+$")
-		// && emptyValidation("Nationality",
-		// nationality.getText().isEmpty())
-		// && emptyValidation("Email", email.getText().isEmpty())
-		// && emptyValidation("DOB",
-		// dob.getEditor().getText().isEmpty())
-		// && emptyValidation("OJT Start Date",
-		// ojtStartDate.getEditor().getText().isEmpty())
-		// && emptyValidation("OJT End Date",
-		// ojtEndDate.getEditor().getText().isEmpty())
-		// && emptyValidation("Line Manager", getLineManager() == null)
-		// && emptyValidation("Major", getmajor() == null)
-		// && emptyValidation("Batch", batch.getText().isEmpty())
-		// ) {
-		// System.out.println("employeeId.getText():" + employeeId.getText());
-		// // Employee employee2 = employeeService.find2((staffID.getText()));
-		// if (employeeId.getText() == null || employeeId.getText().isEmpty()) {
-		// if (validate("Email", getEmail(),
-		// "[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")) {
-		// updateDB(employee);
-		// Employee newEmployee = employeeService.save(employee);
-		// saveAlert(newEmployee);
-		// }
-		//
-		// } else {
-		// employee =
-		// employeeService.find(Integer.parseInt((employeeId.getText())));
-		// updateDB(employee);
-		// Employee updatedemployee = employeeService.update(employee);
-		// updateAlert(updatedemployee);
-		// }
-		//
-		// clearFields();
-		// loadEmployeeDetails();
-		// }
-		//
-		// }
-		//
-		// @FXML
-		// void clickAreaOfWork(ActionEvent event) {
-		// areaOfWorkList.clear();
-		// stageManager.switchScene(FxmlView.AOW);
-		// areaOfWorkList.addAll(areaService.findAll());
-		// try {
-		// areaOfWorkTable.setItems(areaOfWorkList);
-		// } catch (Exception e) {
-		// System.out.println(e + "Empty Data in AreaOfWork table");
-		// }
-		// areaOfWorkTableCol.setCellValueFactory(new
-		// PropertyValueFactory<>("areaOfWork"));
-		// noOfStaffCol.setCellValueFactory(new
-		// PropertyValueFactory<>("count"));
+	private void saveLeaveData(ActionEvent event) {
+		LeaveData leaveData = new LeaveData();
+		if (emptyValidation("Staff Id", staffID.getText().isEmpty())) {
+			System.out.println("leaveId.getText():" + leaveId.getText());
+			if (leaveId.getText() == null || leaveId.getText().isEmpty()) {
+				LeaveData flag = updateDB(leaveData);
+				if (flag.equals(null)) {
+					return;
+				} else {
+					LeaveData newLeave = leaveService.save(leaveData);
+					saveAlert(newLeave);
+				}
+
+			} else {
+				// employee =
+				// employeeService.find(Integer.parseInt((employeeId.getText())));
+				// updateDB(employee);
+				// Employee updatedemployee = employeeService.update(employee);
+				// updateAlert(updatedemployee);
+				printAlert("Update Functionality is disabled");
+			}
+
+			clearFields();
+			loadLeaveDetails();
+		}
 
 	}
 
 	@FXML
-	private void backArea(ActionEvent event) throws IOException {
+	void backButton(ActionEvent event) {
 		stageManager.switchScene(FxmlView.EMPLOYEE);
 	}
 
-	private Employee updateDB(Employee employee) {
-		// employee.setStaffid(getStaffId());
-		// employee.setStaffName(getstaffName());
-		// employee.setUaeid(getUaeid());
-		// employee.setBatch(getBatch());
-		// employee.setPlaceofbirth(getPlaceofbirth());
-		// employee.setDesignation(getDesignation());
-		// employee.setStaffgrade(getStaffgrade());
-		// employee.setNationality(getNationality());
-		// employee.setDepartment(getDepartment());
-		// employee.setContact(getContact());
-		// employee.setAcademicqualification(getAcademicqualification());
-		// employee.setPassport(getPassport());
-		// employee.setPlaceofbirth(getPlaceofbirth());
-		// employee.setStaffgrade(getStaffgrade());
-		// employee.setAcademicqualification(getAcademicqualification());
-		// employee.setDrivinglicense(getDrivinglicense());
-		// employee.setLinemanager(getLineManager());
-		// employee.setAreaofwork(getAreaOfWork());
-		// employee.set_300hrs(getThreeHundredHrs());
-		// employee.setCollegemodules(getCollegeModules());
-		// employee.setLogbook(getLogBook());
-		// employee.setMajor(getmajor());
-		// employee.setWorkinghrs(getworkingHrs());
-		// employee.setNSstatus(getNsStatus());
-		// employee.setSpecifymodules(getSpecifyModules());
-		// employee.setDob(getDob());
-		// employee.setDoj(getDoj());
-		// employee.setOjtstartdate(getOjtStartDate());
-		// employee.setOjtenddate(getOjtEndDate());
-		// employee.setNSstartdate(getNsStartDate());
-		// employee.setNSenddate(getNsEndDate());
-		// employee.setEmail(getEmail());
-		// if (basicLicense.isSelected()) {
-		// employee.setBasicLicense("Yes");
-		// } else {
-		// employee.setBasicLicense("No");
-		// }
-		// if (l3CourseType.isSelected()) {
-		// employee.setL3CourseType("Yes");
-		// } else {
-		// employee.setL3CourseType("No");
-		// }
-		// if (a380Project.isSelected()) {
-		// employee.setA380Project("Yes");
-		// } else {
-		// employee.setA380Project("No");
-		// }
-		// if (rfidProjectMember.isSelected()) {
-		// employee.setRfidProjectMember("Yes");
-		// } else {
-		// employee.setRfidProjectMember("No");
-		// }
-		// if (engineChangeProject.isSelected()) {
-		// employee.setEngineChangeProject("Yes");
-		// } else {
-		// employee.setEngineChangeProject("No");
-		// }
-		// if (corCertificate.isSelected()) {
-		// employee.setCorCertificate("Yes");
-		// } else {
-		// employee.setCorCertificate("No");
-		// }
-		return null;
+	private LeaveData updateDB(LeaveData leave) {
+		leave.setStaffId(getStaffId());
+		leave.setStaffName(getstaffName());
+		leave.setApproverName(getApproverName());
+		leave.setShift(getShift());
+		leave.setApproverName(getApproverName());
+		leave.setFromDate(getFromDate());
+		leave.setToDate(getToDate());
+		leave.setDateOfApproval(getApprovalDate());
+		leave.setTypeOfLeave(getLeaveType());
+		leave.setApproveReject(getApprove());
+		if (Long.parseLong(getBalanceLeave()) > 0) {
+			if (fromDate.getValue() != null && toDate.getValue() != null && approvedDate.getValue() != null) {
+				long dateDifference = ChronoUnit.DAYS.between(getFromDate(), getToDate());
+				if (ChronoUnit.DAYS.between(java.time.LocalDate.now(), getApprovalDate()) <= 0) {	
+					if (dateDifference >= 0) {
+						if (approveReject.getSelectionModel().getSelectedItem() != null) {
+							if ((getApprove().equals("Approve"))) {
+								dateDifference++;
+								long total = Long.parseLong(getTotalLeaveTaken()) + dateDifference;
+								long balance = Long.parseLong(getBalanceLeave()) - dateDifference;
+								if (total > balance) {
+									Boolean getFlag = true;
+									getFlag = printAlert("Your leave exeeds the limit/Error Date Entered");
+									if (!getFlag)
+										leave = null;
+								} else {
+									leave.setTotalLeaveTaken(Long.toString(total));
+									leave.setBalLeave(Long.toString(balance));
+								}
+							} else {
+								leave.setTotalLeaveTaken(getTotalLeaveTaken());
+								leave.setBalLeave(getBalanceLeave());
+							}
+						} else {
+							Boolean getFlag = true;
+							getFlag = printAlert("Please select Approve/Reject");
+							if (!getFlag)
+								leave = null;
+						}
+					} else {
+						Boolean getFlag = true;
+						getFlag = printAlert("To Date should be greater than From Date");
+						if (!getFlag)
+							leave = null;
 
+					}
+				} else {
+					Boolean getFlag = true;
+					getFlag = printAlert("Approval Date should not be greater than System Date");
+					if (!getFlag)
+						leave = null;
+				}
+
+			} else {
+				Boolean getFlag = true;
+				getFlag = printAlert("From,To Date and Approval Date is mandatory");
+				if (!getFlag)
+					leave = null;
+			}
+		} else {
+			Boolean getFlag = true;
+			getFlag = printAlert("Leave Balance reached 0 for current staff");
+			if (!getFlag)
+				leave = null;
+		}
+		return leave;
+
+	}
+
+	public String getStaffId() {
+		return staffID.getText();
+	}
+
+	public String getstaffName() {
+		return staffName.getText();
+	}
+
+	public String getApproverName() {
+		return approverName.getSelectionModel().getSelectedItem();
+	}
+
+	public String getShift() {
+		return shift.getText();
+	}
+
+	public LocalDate getFromDate() {
+		return fromDate.getValue();
+	}
+
+	public LocalDate getToDate() {
+		return toDate.getValue();
+	}
+
+	public LocalDate getApprovalDate() {
+		return approvedDate.getValue();
+	}
+
+	public String getLeaveType() {
+		return typeOfLeave.getSelectionModel().getSelectedItem();
+	}
+
+	public String getApprove() {
+		return approveReject.getSelectionModel().getSelectedItem();
+	}
+
+	public String getTotalLeaveTaken() {
+		return totalLeaveTaken.getText();
+	}
+
+	public String getBalanceLeave() {
+		return balanceLeave.getText();
 	}
 
 	@FXML
@@ -487,53 +403,27 @@ public class LeaveDataController implements Initializable {
 	}
 
 	private void clearFields() {
-		// employeeId.setText(null);
-		// staffID.clear();
-		// staffName.clear();
-		// dob.getEditor().clear();
-		// doj.getEditor().clear();
-		// ojtStartDate.getEditor().clear();
-		// ojtEndDate.getEditor().clear();
-		// nsStartDate.getEditor().clear();
-		// nsEndDate.getEditor().clear();
-		// uaeId.clear();
-		// batch.clear();
-		// placeOfBirth.clear();
-		// designation.clear();
-		// staffGrade.clear();
-		// nationality.clear();
-		// department.clear();
-		// academicQualification.clear();
-		// passport.clear();
-		// drivingLicense.clear();
-		// contact.clear();
-		// noOfLeavesTaken.clear();
-		// balanceNoOfLeaves.clear();
-		// areaOfWork.getSelectionModel().clearSelection();
-		// email.clear();
-		// nsStatus.getSelectionModel().clearSelection();
-		// threeHundredHrs.getSelectionModel().clearSelection();
-		// logBook.getSelectionModel().clearSelection();
-		// major.getSelectionModel().clearSelection();
-		// lineManager.getSelectionModel().clearSelection();
-		// workingHrs.getSelectionModel().clearSelection();
-		// collegeModules.getSelectionModel().clearSelection();
-		// specifyModulesNotCompleted.clear();
-		// basicLicense.setSelected(false);
-		// l3CourseType.setSelected(false);
-		// a380Project.setSelected(false);
-		// rfidProjectMember.setSelected(false);
-		// engineChangeProject.setSelected(false);
-		// corCertificate.setSelected(false);
+		leaveId.setText(null);
+		staffID.clear();
+		staffName.clear();
+		fromDate.getEditor().clear();
+		toDate.getEditor().clear();
+		approvedDate.getEditor().clear();
+		approveReject.getSelectionModel().clearSelection();
+		typeOfLeave.getSelectionModel().clearSelection();
+		approverName.getSelectionModel().clearSelection();
+		shift.clear();
+		totalLeaveTaken.clear();
+		balanceLeave.clear();
 	}
 
-	private void saveAlert(Employee employee) {
+	private void saveAlert(LeaveData leave) {
 
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Employee saved successfully.");
 		alert.setHeaderText(null);
-		alert.setContentText("The employee " + employee.getStaffName() + " " + " has been created and \n" + " id is "
-				+ employee.getStaffid() + ".");
+		alert.setContentText("The Leave Data " + leave.getStaffName() + " " + " has been created for \n" + " id "
+				+ leave.getStaffId() + ".");
 		alert.showAndWait();
 	}
 
@@ -546,358 +436,173 @@ public class LeaveDataController implements Initializable {
 		alert.showAndWait();
 	}
 
-	// public String getEmployeeId() {
-	// return employeeId.getText();
-	// }
-	//
-	// public String getStaffId() {
-	// return staffID.getText();
-	// }
-	//
-	// public String getstaffName() {
-	// return staffName.getText();
-	// }
-	//
-	// public String getUaeid() {
-	// return uaeId.getText();
-	// }
-	//
-	// public String getBatch() {
-	// return batch.getText();
-	// }
-	//
-	// public String getContact() {
-	// return contact.getText();
-	// }
-	//
-	// public String getPlaceofbirth() {
-	// return placeOfBirth.getText();
-	// }
-	//
-	// public String getDesignation() {
-	// return designation.getText();
-	// }
-	//
-	// public String getStaffgrade() {
-	// return staffGrade.getText();
-	// }
-	//
-	// public String getNationality() {
-	// return nationality.getText();
-	// }
-	//
-	// public String getDepartment() {
-	// return department.getText();
-	// }
-	//
-	// public String getAcademicqualification() {
-	// return academicQualification.getText();
-	// }
-	//
-	// public String getPassport() {
-	// return passport.getText();
-	// }
-	//
-	// public String getDrivinglicense() {
-	// return drivingLicense.getText();
-	// }
-	//
-	// public LocalDate getDob() {
-	// return dob.getValue();
-	// }
-	//
-	// public LocalDate getDoj() {
-	// return doj.getValue();
-	// }
-	//
-	// public LocalDate getOjtStartDate() {
-	// return ojtStartDate.getValue();
-	// }
-	//
-	// public LocalDate getOjtEndDate() {
-	// return ojtEndDate.getValue();
-	// }
-	//
-	// public LocalDate getNsStartDate() {
-	// return nsStartDate.getValue();
-	// }
-	//
-	// public LocalDate getNsEndDate() {
-	// return nsEndDate.getValue();
-	// }
-	//
-	// public String getEmail() {
-	// return email.getText();
-	// }
-	//
-	// public String getLineManager() {
-	// return lineManager.getSelectionModel().getSelectedItem();
-	// }
-	//
-	// public String getAreaOfWork() {
-	// return areaOfWork.getSelectionModel().getSelectedItem();
-	// }
-	//
-	// public String getNsStatus() {
-	// return nsStatus.getSelectionModel().getSelectedItem();
-	// }
-	//
-	// public String getThreeHundredHrs() {
-	// return threeHundredHrs.getSelectionModel().getSelectedItem();
-	// }
-	//
-	// public String getCollegeModules() {
-	// return collegeModules.getSelectionModel().getSelectedItem();
-	// }
-	//
-	// public String getworkingHrs() {
-	// return workingHrs.getSelectionModel().getSelectedItem();
-	// }
-	//
-	// public String getmajor() {
-	// return major.getSelectionModel().getSelectedItem();
-	// }
-	//
-	// public String getLogBook() {
-	// return logBook.getSelectionModel().getSelectedItem();
-	// }
-	//
-	// public String getSpecifyModules() {
-	// return specifyModulesNotCompleted.getText();
-	// }
-	//
-	// public String getL3CourseType() {
-	// return l3CourseType.getText();
-	// }
-	//
-	// public String getA830Project() {
-	// return a380Project.getText();
-	// }
-	//
-	// public String getRfidProjectMember() {
-	// return rfidProjectMember.getText();
-	// }
-	//
-	// public String getEngineChangeProject() {
-	// return engineChangeProject.getText();
-	// }
-	//
-	// public String getCorCertificate() {
-	// return corCertificate.getText();
-	// }
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		approveReject.setItems(ApprovalDropDown);
 		typeOfLeave.setItems(TypeOfLeaveDropDown);
-
-		// employeeTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		//
-		// setColumnProperties();
-		//
-		// // Add all employees into table
-		// loadEmployeeDetails();
+		approverName.setItems(approverNameDropDown);
+		setColumnProperties();
+		// Add all employees into table
+		loadLeaveDetails();
 	}
 
 	/*
 	 * Set All employeeTable column properties
 	 */
 	private void setColumnProperties() {
-		// // Override date format in table
-		// colDOB.setCellFactory(TextFieldTableCell.forTableColumn(new
-		// StringConverter<LocalDate>() {
-		// String pattern = "dd/MM/yyyy";
-		// DateTimeFormatter dateFormatter =
-		// DateTimeFormatter.ofPattern(pattern);
-		//
-		// @Override
-		// public String toString(LocalDate date) {
-		// if (date != null) {
-		// return dateFormatter.format(date);
-		// } else {
-		// return "";
-		// }
-		// }
-		//
-		// @Override
-		// public LocalDate fromString(String string) {
-		// if (string != null && !string.isEmpty()) {
-		// return LocalDate.parse(string, dateFormatter);
-		// } else {
-		// return null;
-		// }
-		// }
-		// }));
-		//
-		// ScrollPane sp = new ScrollPane();
-		// sp.setContent(employeeTable);
-		// sp.setPrefSize(1050, 600);
-		// sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-		// sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-		// boarderPane.setRight(sp);
-		// BorderPane.setMargin(sp, new Insets(0, 0, 10, 10));
-		//
-		// colstaffID.setCellValueFactory(new
-		// PropertyValueFactory<>("staffid"));
-		// staffNameCol.setCellValueFactory(new
-		// PropertyValueFactory<>("staffName"));
-		// uaeIdCol.setCellValueFactory(new PropertyValueFactory<>("uaeid"));
-		// colDOB.setCellValueFactory(new PropertyValueFactory<>("dob"));
-		// batchCol.setCellValueFactory(new PropertyValueFactory<>("batch"));
-		// grade.setCellValueFactory(new PropertyValueFactory<>("staffgrade"));
-		// nationalityCol.setCellValueFactory(new
-		// PropertyValueFactory<>("nationality"));
-		// colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		// colDOJ.setCellValueFactory(new PropertyValueFactory<>("doj"));
-		// departmentCol.setCellValueFactory(new
-		// PropertyValueFactory<>("department"));
-		// contactCol.setCellValueFactory(new
-		// PropertyValueFactory<>("contact"));
-		// designationCol.setCellValueFactory(new
-		// PropertyValueFactory<>("designation"));
-		// nsStatusCol.setCellValueFactory(new
-		// PropertyValueFactory<>("NSstatus"));
-		// nsEndDateCol.setCellValueFactory(new
-		// PropertyValueFactory<>("NS_end_date"));
-		// nsStartDateCol.setCellValueFactory(new
-		// PropertyValueFactory<>("NSstartdate"));
-		// areaOfWorkCol.setCellValueFactory(new
-		// PropertyValueFactory<>("areaofwork"));
-		// placeOfBirthCol.setCellValueFactory(new
-		// PropertyValueFactory<>("placeofbirth"));
-		// academicCol.setCellValueFactory(new
-		// PropertyValueFactory<>("academicqualification"));
-		// passportCol.setCellValueFactory(new
-		// PropertyValueFactory<>("passport"));
-		// drivingLicenseCol.setCellValueFactory(new
-		// PropertyValueFactory<>("drivinglicense"));
-		// ojtStartDateCol.setCellValueFactory(new
-		// PropertyValueFactory<>("ojtstartdate"));
-		// ojtEndDateCol.setCellValueFactory(new
-		// PropertyValueFactory<>("ojtenddate"));
-		// threeHundredCol.setCellValueFactory(new
-		// PropertyValueFactory<>("_300hrs"));
-		// logBookCol.setCellValueFactory(new
-		// PropertyValueFactory<>("logbook"));
-		// majorCol.setCellValueFactory(new PropertyValueFactory<>("major"));
-		// lineOfManagerCol.setCellValueFactory(new
-		// PropertyValueFactory<>("linemanager"));
-		// workingHrsCol.setCellValueFactory(new
-		// PropertyValueFactory<>("workinghrs"));
-		// collegeModulesCol.setCellValueFactory(new
-		// PropertyValueFactory<>("collegemodules"));
-		// specifyModulesCol.setCellValueFactory(new
-		// PropertyValueFactory<>("specifymodules"));
-		// basicLicenseCol.setCellValueFactory(new
-		// PropertyValueFactory<>("basicLicense"));
-		// l3CourseTypeCol.setCellValueFactory(new
-		// PropertyValueFactory<>("l3CourseType"));
-		// A380ProjectCol.setCellValueFactory(new
-		// PropertyValueFactory<>("a380Project"));
-		// rfidProjectMemberCol.setCellValueFactory(new
-		// PropertyValueFactory<>("rfidProjectMember"));
-		// engineChangeProjectCol.setCellValueFactory(new
-		// PropertyValueFactory<>("engineChangeProject"));
-		// cORCertificateCol.setCellValueFactory(new
-		// PropertyValueFactory<>("corCertificate"));
-		//
-		// colEdit.setCellFactory(cellFactory);
+
+		fromDateCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<LocalDate>() {
+			String pattern = "dd-MMM-yyyy";
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
+			@Override
+			public String toString(LocalDate date) {
+				if (date != null) {
+					return dateFormatter.format(date);
+				} else {
+					return "";
+				}
+			}
+
+			@Override
+			public LocalDate fromString(String string) {
+				if (string != null && !string.isEmpty()) {
+					return LocalDate.parse(string, dateFormatter);
+				} else {
+					return null;
+				}
+			}
+		}));
+
+		toDateCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<LocalDate>() {
+			String pattern = "dd-MMM-yyyy";
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
+			@Override
+			public String toString(LocalDate date) {
+				if (date != null) {
+					return dateFormatter.format(date);
+				} else {
+					return "";
+				}
+			}
+
+			@Override
+			public LocalDate fromString(String string) {
+				if (string != null && !string.isEmpty()) {
+					return LocalDate.parse(string, dateFormatter);
+				} else {
+					return null;
+				}
+			}
+		}));
+
+		approvedDateCol.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<LocalDate>() {
+			String pattern = "dd-MMM-yyyy";
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
+			@Override
+			public String toString(LocalDate date) {
+				if (date != null) {
+					return dateFormatter.format(date);
+				} else {
+					return "";
+				}
+			}
+
+			@Override
+			public LocalDate fromString(String string) {
+				if (string != null && !string.isEmpty()) {
+					return LocalDate.parse(string, dateFormatter);
+				} else {
+					return null;
+				}
+			}
+		}));
+
+		ScrollPane sp = new ScrollPane();
+		sp.setContent(leaveTable);
+		sp.setPrefSize(1050, 600);
+		sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		boarderPane.setRight(sp);
+		BorderPane.setMargin(sp, new Insets(0, 0, 10, 10));
+
+		colstaffID.setCellValueFactory(new PropertyValueFactory<>("staffId"));
+		staffNameCol.setCellValueFactory(new PropertyValueFactory<>("staffName"));
+		fromDateCol.setCellValueFactory(new PropertyValueFactory<>("fromDate"));
+		toDateCol.setCellValueFactory(new PropertyValueFactory<>("toDate"));
+		shiftCol.setCellValueFactory(new PropertyValueFactory<>("shift"));
+		totalLeaveTakenCol.setCellValueFactory(new PropertyValueFactory<>("totalLeaveTaken"));
+		balanceLeaveCol.setCellValueFactory(new PropertyValueFactory<>("balLeave"));
+		approverNameCol.setCellValueFactory(new PropertyValueFactory<>("approverName"));
+		approvedDateCol.setCellValueFactory(new PropertyValueFactory<>("dateOfApproval"));
+		leaveTypeCol.setCellValueFactory(new PropertyValueFactory<>("typeOfLeave"));
+		leaveApprovedYNCol.setCellValueFactory(new PropertyValueFactory<>("approveReject"));
+
+		colEdit.setCellFactory(cellFactory);
 	}
 
-	// Callback<TableColumn<Employee, Boolean>, TableCell<Employee, Boolean>>
-	// cellFactory = new Callback<TableColumn<Employee, Boolean>,
-	// TableCell<Employee, Boolean>>() {
-	// @Override
-	// public TableCell<Employee, Boolean> call(final TableColumn<Employee,
-	// Boolean> param) {
-	// final TableCell<Employee, Boolean> cell = new TableCell<Employee,
-	// Boolean>() {
-	// Image imgEdit = new
-	// Image(getClass().getResourceAsStream("/images/edit.png"));
-	// final Button btnEdit = new Button();
-	//
-	// @Override
-	// public void updateItem(Boolean check, boolean empty) {
-	// super.updateItem(check, empty);
-	// if (empty) {
-	// setGraphic(null);
-	// setText(null);
-	// } else {
-	// btnEdit.setOnAction(e -> {
-	// Employee employee = getTableView().getItems().get(getIndex());
-	// updateEmployee(employee);
-	// });
-	//
-	// btnEdit.setStyle("-fx-background-color: transparent;");
-	// ImageView iv = new ImageView();
-	// iv.setImage(imgEdit);
-	// iv.setPreserveRatio(true);
-	// iv.setSmooth(true);
-	// iv.setCache(true);
-	// btnEdit.setGraphic(iv);
-	//
-	// setGraphic(btnEdit);
-	// setAlignment(Pos.CENTER);
-	// setText(null);
-	// employeeId.setVisible(false);
-	// }
-	// }
-	//
-	// private void updateEmployee(Employee employee) {
-	// employeeId.setText(Integer.toString(employee.getId()));
-	// staffID.setText((employee.getStaffid()));
-	// staffName.setText(employee.getStaffName());
-	// uaeId.setText(employee.getUaeid());
-	// dob.setValue(employee.getDob());
-	// batch.setText(employee.getBatch());
-	// doj.setValue(employee.getDoj());
-	// ojtStartDate.setValue(employee.getOjtstartdate());
-	// ojtEndDate.setValue(employee.getOjtenddate());
-	// nsStartDate.setValue(employee.getNSstartdate());
-	// nsEndDate.setValue(employee.getNS_end_date());
-	// placeOfBirth.setText(employee.getPlaceofbirth());
-	// designation.setText(employee.getDesignation());
-	// staffGrade.setText(employee.getStaffgrade());
-	// nationality.setText(employee.getNationality());
-	// department.setText(employee.getDepartment());
-	// academicQualification.setText(employee.getAcademicqualification());
-	// passport.setText(employee.getPassport());
-	// drivingLicense.setText(employee.getDrivinglicense());
-	// contact.setText(employee.getContact());
-	// email.setText(employee.getEmail());
-	// // noOfLeavesTaken.setText(employee.get);
-	// // balanceNoOfLeaves.setText(employee.get);
-	// areaOfWork.setValue(employee.getAreaofwork());
-	// nsStatus.setValue(employee.getNSstatus());
-	// threeHundredHrs.setValue(employee.get_300hrs());
-	// logBook.setValue(employee.getLogbook());
-	// major.setValue(employee.getMajor());
-	// lineManager.setValue(employee.getLinemanager());
-	// workingHrs.setValue(employee.getWorkinghrs());
-	// collegeModules.setValue(employee.getCollegemodules());
-	// specifyModulesNotCompleted.setText(employee.getSpecifymodules());
-	// basicLicense.setSelected(Boolean.parseBoolean(employee.getBasicLicense1()));
-	// l3CourseType.setSelected(Boolean.parseBoolean(employee.getL3CourseType1()));
-	// a380Project.setSelected(Boolean.parseBoolean(employee.getA380Project1()));
-	// rfidProjectMember.setSelected(Boolean.parseBoolean(employee.getRfidProjectMember1()));
-	// engineChangeProject.setSelected(Boolean.parseBoolean(employee.getEngineChangeProject1()));
-	// corCertificate.setSelected(Boolean.parseBoolean(employee.getCorCertificate1()));
-	//
-	// }
-	// };
-	// return cell;
-	// }
-	// };
+	Callback<TableColumn<LeaveData, Boolean>, TableCell<LeaveData, Boolean>> cellFactory = new Callback<TableColumn<LeaveData, Boolean>, TableCell<LeaveData, Boolean>>() {
+		@Override
+		public TableCell<LeaveData, Boolean> call(final TableColumn<LeaveData, Boolean> param) {
+			final TableCell<LeaveData, Boolean> cell = new TableCell<LeaveData, Boolean>() {
+				Image imgEdit = new Image(getClass().getResourceAsStream("/images/edit.png"));
+				final Button btnEdit = new Button();
+
+				@Override
+				public void updateItem(Boolean check, boolean empty) {
+					super.updateItem(check, empty);
+					if (empty) {
+						setGraphic(null);
+						setText(null);
+					} else {
+						btnEdit.setOnAction(e -> {
+							LeaveData leave = getTableView().getItems().get(getIndex());
+							updateLeaveData(leave);
+						});
+
+						btnEdit.setStyle("-fx-background-color: transparent;");
+						ImageView iv = new ImageView();
+						iv.setImage(imgEdit);
+						iv.setPreserveRatio(true);
+						iv.setSmooth(true);
+						iv.setCache(true);
+						btnEdit.setGraphic(iv);
+
+						setGraphic(btnEdit);
+						setAlignment(Pos.CENTER);
+						setText(null);
+						leaveId.setVisible(false);
+					}
+				}
+
+				private void updateLeaveData(LeaveData leave) {
+					leaveId.setText(Integer.toString(leave.getLeaveId()));
+					staffID.setText((leave.getStaffId()));
+					staffName.setText(leave.getStaffName());
+					approverName.setValue(leave.getApproverName());
+					approveReject.setValue(leave.getApproveReject());
+					typeOfLeave.setValue(leave.getTypeOfLeave());
+					shift.setText(leave.getShift());
+					approvedDate.setValue(leave.getDateOfApproval());
+					totalLeaveTaken.setText(leave.getTotalLeaveTaken());
+					balanceLeave.setText(leave.getBalLeave());
+				}
+			};
+			return cell;
+		}
+	};
 
 	/*
 	 * Add All employees to observable list and update table
 	 */
-	private void loadEmployeeDetails() {
-		// employeeList.clear();
-		// employeeList.addAll(employeeService.findAll());
-		//
-		// employeeTable.setItems(employeeList);
+	private void loadLeaveDetails() {
+		leaveList.clear();
+		leaveList.addAll(leaveService.findAll());
+
+		leaveTable.setItems(leaveList);
 	}
 
 	/*

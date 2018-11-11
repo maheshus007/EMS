@@ -4,7 +4,117 @@
 	-fx-background-color:  #3cbc53;
 }
 
+.btnGrey{
+	-fx-background-color:  #e4edde;
+}
+
 .background{
 	-fx-background-color: DODGERBLUE;
 }
 
+.table-view{
+	-fx-background-color: transparent;
+}
+.table-view:focussed{
+	-fx-background-color: transparent;
+}
+.table-row-cell:odd{
+	-fx-background-color: #d7eef2;
+	-fx-background-insets: 0, 0 0 1 0;	
+}
+.table-row-cell:even{
+	-fx-background-color: #bfc8f2;
+	-fx-background-insets: 0, 0 0 1 0;	
+}
+.table-row-cell:selected {
+    -fx-background-color: #F0CF17;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.label {    
+     -fx-effect: dropshadow(two-pass-box , darkgray, 20, 0.0 , 4, 5);
+     
+}
+
+.date-picker-popup > .month-year-pane {
+    -fx-padding: 0.588883em 0.5em 0.666667em 0.5em; /* 7 6 8 6 */
+    -fx-background-color: derive(-fx-box-border,30%), 
+        linear-gradient(to bottom, derive(-fx-base,-3%), 
+                                   derive(-fx-base,5%) 50%, 
+                                   derive(-fx-base,-3%));
+    -fx-background-insets: 0 0 0 0, 0 0 1 0;
+}
+
+.button{
+    -fx-effect: dropshadow(two-pass-box , black, 15, 0.0 , 4, 5);
+    -fx-background-color: rgba(234,184,91,0.7);
+    -fx-background-radius: 15 15 15 15;
+    -fx-background-insets: 2 2 2 2 ;
+}
+
+.button:pressed{
+    -fx-background-color: rgba(180,180,180,0.7);
+}
+
+.button:hover{
+    -fx-background-color: rgba(235,235,235,0.7);
+}
+
+.button:focused{
+    -fx-background-color: rgba(205,205,205,0.7);
+  
+}
+
+/* .table-view .column-header-background{
+    -fx-background-color: linear-gradient(#131313 0.0%, #424141 100.0%);
+} */
+
+ //Style of each column header's label  in the tableView
+.table-view .column-header-background .label{
+    -fx-background-color: blue;
+    -fx-background-color: transparent;
+    /* -fx-font-weight:bold; */
+    -fx-font-size:13px;
+    /* -fx-text-fill: blue; */
+}
+
+//Style of each column in the tableView
+.table-view .table-column{
+    -fx-alignment:center;
+}
+
+ //Style of each table cell
+.table-view .table-cell{
+    /* -fx-font-weight:bold; */
+    -fx-font-size:13px;           //the font size you asked in the comments below
+   /*  -fx-text-fill:orange; */
+
+}
+
+
+//Style for each < non odd> row of table view
+.table-row-cell{
+    -fx-background-color: white;
+    -fx-background-insets: 0.0, 0.0 0.0 1.0 0.0;
+    -fx-padding: 0.0em; 
+}
+
+//Style for each <odd> row of table view
+.table-row-cell:odd{
+    /* -fx-background-color: orange; */
+    -fx-background-insets: 0.0, 0.0 0.0 1.0 0.0;
+    -fx-padding: 0.0em;  
+}
+*/
+
+//Style of each entire row in the table view
+/* .table-row-cell:selected {
+   -fx-border-color:transparent firebrick transparent firebrick  ;
+    -fx-border-width:2.0;
+} */
+
+//Style of each entire row in the table view when is getting focused
+/* .table-row-cell:focused {
+    -fx-background-color:purple;
+} */
